@@ -6,3 +6,21 @@ This is the pytorch implementation of the [paper](https://ieeexplore.ieee.org/ab
 
 **Fig 1**.IGOAS framework
 
+## Citation 
+If you find FDSSC useful in your research, please consider citing.
+
+```
+@article{tip21,
+   author = {Zhao, Cairong and Lv, Xinbi and Dou, Shuguang and Zhang, Shanshan and Wu, Jun and Wang, Liang},
+   title = {Incremental Generative Occlusion Adversarial Suppression Network for Person ReID},
+   journal = {IEEE transactions on image processing : a publication of the IEEE Signal Processing Society},
+   volume = {30},
+   pages = {4212-4224},
+   DOI = {10.1109/tip.2021.3070182},
+   url = {<Go to ISI>://MEDLINE:33822724},
+   year = {2021},
+   type = {Journal Article}
+}
+```
+## Setup
+
