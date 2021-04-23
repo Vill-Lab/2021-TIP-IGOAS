@@ -11,7 +11,7 @@ This code is based on [torchreid](https://github.com/KaiyangZhou/deep-person-rei
 
 
 ## Citation 
-If you find FDSSC useful in your research, please consider citing.
+If you find IGOAS useful in your research, please consider citing.
 
 ```
 @article{tip21,
