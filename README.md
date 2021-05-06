@@ -28,10 +28,20 @@ Make sure [conda](https://www.anaconda.com/distribution/) is installed.
     python setup.py develop
 
 
-# Train
+# Training
 To train IGOAS on Occluded-Duke, do
 
      python scirpt/main.py --config-file configs/bfe.yaml
+
+
+# Result
+
+| Method | Rank-1 | mAP |
+| ------ | ------ | ------ |
+| PGFA | 51.4 | 37.3 |
+| HONet| 55.1 | 43.8 |
+| MHSA | 59.7 | 44.8 |
+|IGOAS | 60.1 | 49.4 |
 
 
 
