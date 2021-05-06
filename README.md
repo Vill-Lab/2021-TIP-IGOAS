@@ -8,10 +8,7 @@ This is the pytorch implementation of the [paper](https://ieeexplore.ieee.org/ab
 
 # Installation
 
-Make sure `conda <https://www.anaconda.com/distribution/>`_ is installed.
-
-
-.. code-block:: bash
+Make sure [conda](https://www.anaconda.com/distribution/) is installed.
 
     # cd to your preferred directory and clone this repo
     git clone https://github.com/Vill-Lab/IGOAS.git
