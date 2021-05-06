@@ -28,10 +28,6 @@ Make sure [conda](https://www.anaconda.com/distribution/) is installed.
     python setup.py develop
 
 
-## Reference
-This code is based on [torchreid](https://github.com/KaiyangZhou/deep-person-reid).
-
-
 ## Citation 
 If you find IGOAS useful in your research, please consider citing.
 
@@ -49,4 +45,6 @@ If you find IGOAS useful in your research, please consider citing.
 }
 ```
 
+## Reference
+This code is based on [torchreid](https://github.com/KaiyangZhou/deep-person-reid).
 
