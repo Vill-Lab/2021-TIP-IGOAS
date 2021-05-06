@@ -1,0 +1,45 @@
+model:
+  name: 'resnet50'
+  pretrained: True
+
+data:
+  type: 'image'
+  sources: ['market1501']
+  targets: ['market1501','partialreid','partialilids']
+  height: 384
+  width: 128
+  combineall: False
+  transforms: ['random_flip','random_crop']
+  save_dir: 'log/market/bfe'
+
+sampler:
+  train_sampler: 'RandomIdentitySampler'
+
+loss:
+  name: 'triplet'
+  softmax:
+    label_smooth: True
+  triplet:
+    margin: 0.3 # distance margin
+    weight_t: 1.0 # weight to balance hard triplet loss
+    weight_x: 1.0 # weight to balance cross entropy loss
+
+train:
+  optim: 'amsgrad'
+  lr: 0.0003
+  max_epoch: 300
+  batch_size: 32
+  fixbase_epoch: 5
+  open_layers: ['res_part','res_part2','reduction_g','reduction_p','classifier_g','classifier_p']
+#  open_layers: ['classifier']
+  lr_scheduler: 'multi_step'
+  stepsize: [60,120]
+
+test:
+  batch_size: 100
+  dist_metric: 'euclidean'
+  normalize_feature: True
+  evaluate: False
+  eval_freq: -1
+  rerank: False
+  visactmap: False

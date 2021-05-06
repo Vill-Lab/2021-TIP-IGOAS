@@ -1,0 +1,52 @@
+model:
+  name: 'pcb_p4'
+  pretrained: True
+  load_weights: 'log/duke/pcb4/model.pth.tar-60'
+  # resume: 'log/market/pcb4/model.pth.tar-50'
+
+data:
+  type: 'image'
+  # sources: ['market1501']
+  # targets: ['market1501','partialreid','partialilids']
+  sources: ['occludedduke']
+  targets: ['occludedduke']
+  height: 384
+  width: 128
+  combineall: False
+  transforms: ['random_flip']
+  save_dir: 'log/occludedduke/pcb4/'
+
+sampler:
+  train_sampler: 'RandomSampler'  
+  # train_sampler: 'RandomIdentitySampler'
+
+loss:
+  name: 'softmax'
+  softmax:
+    label_smooth: True
+  triplet:
+    margin: 0.3 # distance margin
+    weight_t: 1.0 # weight to balance hard triplet loss
+    weight_x: 1.0 # weight to balance cross entropy loss
+    weight_s: 1000.0 # weight to balance scp loss
+
+train:
+  optim: 'adam'
+  lr: 0.0003
+  max_epoch: 90
+  batch_size: 32
+  fixbase_epoch: 5
+  open_layers: ['classifier','conv5']
+  # open_layers: ['part_erasing','res_part','att','conv_pool1','conv_pool2','conv_pool3','conv_pool4','classifier1','classifier2','classifier3','classifier4']
+  # open_layers: ['batch_drop','res_part0','res_part1','att_module1','conv_pool1','conv_pool2','conv_pool3','conv_pool4','classifier','conv5']
+  lr_scheduler: 'multi_step'
+  stepsize: [20,40]
+
+test:
+  batch_size: 100
+  dist_metric: 'euclidean'
+  normalize_feature: False
+  evaluate: False
+  eval_freq: -1
+  rerank: False
+  visactmap: False

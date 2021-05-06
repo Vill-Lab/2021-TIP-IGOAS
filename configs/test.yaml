@@ -1,0 +1,38 @@
+model:
+  name: 'resnet50_fc512'
+  pretrained: True
+
+data:
+  type: 'image'
+  sources: ['partialilids']
+  targets: ['partialilids']
+  height: 256
+  width: 128
+  combineall: False
+  transforms: ['random_flip','random_crop']
+  save_dir: 'log/test'
+
+loss:
+  name: 'softmax'
+  softmax:
+    label_smooth: True
+
+train:
+  optim: 'adam'
+  lr: 0.0003
+  max_epoch: 60
+  batch_size: 64
+  fixbase_epoch: 5
+
+  open_layers: ['fc','classifier']
+  lr_scheduler: 'single_step'
+  stepsize: [20]
+
+test:
+  batch_size: 100
+  dist_metric: 'euclidean'
+  normalize_feature: False
+  evaluate: False
+  eval_freq: -1
+  rerank: False
+  visactmap: False

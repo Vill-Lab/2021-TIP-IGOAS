@@ -1,0 +1,50 @@
+model:
+  name: 'bfe'
+  pretrained: True
+  # load_weights: 'log/occludedduke(60.4%)/model.pth.tar-90'
+  # resume: 'log/Cm55p3/model.pth.tar-70'
+
+data:
+  type: 'image'
+  sources: ['occludedreid']   
+  targets: ['occludedreid']   
+  height: 384
+  width: 128
+  combineall: False
+  transforms: ['random_flip'] 
+  save_dir: 'log/bre'
+  workers: 16
+
+sampler:
+  train_sampler: 'RandomSampler'
+
+
+loss:
+  name: 'softmax'
+  softmax:
+    label_smooth: True
+
+
+train:
+  optim: adam
+  lr: 0.0003
+  max_epoch: 90
+  batch_size: 64
+  fixbase_epoch: 5
+  open_layers: ['res_part1', 'res_part2', 'classifier1', 'classifier2', 'reduction1', 'reduction2', 'batch_drop', 'batch_crop','batch_erase','att1','att_module2']
+  lr_scheduler: 'multi_step'
+  # lr_scheduler: 'warmup'
+  stepsize: [20,40]
+  print_freq: 200  
+
+test:
+  batch_size: 128 
+  dist_metric: 'euclidean'
+  normalize_feature: False
+  evaluate: False
+  eval_freq: 4 
+  rerank: False
+  start_eval: 0
+  visactmap: False
+  visrank: False    
+  visrank_topk: 10

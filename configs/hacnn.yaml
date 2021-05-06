@@ -1,0 +1,45 @@
+model:
+  name: 'hacnn'
+  pretrained: False
+
+data:
+  type: 'image'
+  sources: ['msmt17']
+  targets: ['msmt17']
+  height: 160
+  width: 64
+  combineall: False
+  transforms: ['random_flip','random_crop']
+  save_dir: 'log/msmt/hacnn/1217/'
+
+sampler:
+  train_sampler: ''
+
+loss:
+  name: 'softmax'
+  softmax:
+    label_smooth: True
+  triplet:
+    margin: 0.3 # distance margin
+    weight_t: 1.0 # weight to balance hard triplet loss
+    weight_x: 1.0 # weight to balance cross entropy loss
+    weight_s: 10.0 # weight to balance scp loss
+
+train:
+  optim: 'amsgrad'
+  lr: 0.0003
+  max_epoch: 150
+  batch_size: 32
+  fixbase_epoch: 0
+  open_layers: ['classifier']
+  lr_scheduler: 'multi_step'
+  stepsize: [30,60,90]
+
+test:
+  batch_size: 100
+  dist_metric: 'euclidean'
+  normalize_feature: False
+  evaluate: True
+  eval_freq: -1
+  rerank: False
+  visactmap: False

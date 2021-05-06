@@ -1,0 +1,1086 @@
+====================================
+Show configuration
+adam:
+  beta1: 0.9
+  beta2: 0.999
+cuhk03:
+  classic_split: False
+  labeled_images: False
+  use_metric_cuhk03: False
+data:
+  combineall: False
+  height: 384
+  norm_mean: [0.485, 0.456, 0.406]
+  norm_std: [0.229, 0.224, 0.225]
+  root: reid-data
+  save_dir: log/bs48
+  sources: ['occludedduke']
+  split_id: 0
+  targets: ['occludedduke']
+  transforms: ['random_flip']
+  type: image
+  width: 128
+  workers: 16
+loss:
+  name: softmax
+  softmax:
+    label_smooth: True
+  triplet:
+    margin: 0.3
+    weight_s: 1.0
+    weight_t: 1.0
+    weight_x: 1.0
+market1501:
+  use_500k_distractors: False
+model:
+  load_weights: 
+  name: bfe
+  pretrained: True
+  resume: 
+rmsprop:
+  alpha: 0.99
+sampler:
+  num_instances: 4
+  train_sampler: RandomSampler
+sgd:
+  dampening: 0.0
+  momentum: 0.9
+  nesterov: False
+test:
+  batch_size: 128
+  dist_metric: euclidean
+  eval_freq: 4
+  evaluate: False
+  normalize_feature: False
+  ranks: [1, 3, 5, 10]
+  rerank: False
+  start_eval: 0
+  visactmap: False
+  visrank: False
+  visrank_topk: 10
+train:
+  base_lr_mult: 0.1
+  batch_size: 64
+  fixbase_epoch: 5
+  gamma: 0.1
+  lr: 0.0003
+  lr_scheduler: multi_step
+  max_epoch: 120
+  new_layers: ['classifier']
+  open_layers: ['res_part1', 'res_part2', 'classifier1', 'classifier2', 'reduction1', 'reduction2', 'batch_drop', 'batch_crop', 'batch_erase', 'att1', 'att_module2']
+  optim: adam
+  print_freq: 100
+  seed: 1
+  staged_lr: False
+  start_epoch: 0
+  stepsize: [20, 40, 90]
+  weight_decay: 0.0005
+use_gpu: True
+video:
+  pooling_method: avg
+  sample_method: evenly
+  seq_len: 15
+
+Collecting env info ...
+** System info **
+PyTorch version: 1.7.0
+Is debug build: True
+CUDA used to build PyTorch: 11.0
+ROCM used to build PyTorch: N/A
+
+OS: Ubuntu 18.04.5 LTS (x86_64)
+GCC version: (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0
+Clang version: Could not collect
+CMake version: Could not collect
+
+Python version: 3.7 (64-bit runtime)
+Is CUDA available: True
+CUDA runtime version: Could not collect
+GPU models and configuration: 
+GPU 0: GeForce RTX 3090
+GPU 1: GeForce RTX 3090
+
+Nvidia driver version: 455.23.04
+cuDNN version: Could not collect
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+
+Versions of relevant libraries:
+[pip3] numpy==1.19.4
+[pip3] torch==1.7.0
+[pip3] torchreid==1.0.6
+[pip3] torchvision==0.8.1
+[conda] blas                      1.0                         mkl    https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+[conda] cudatoolkit               11.0.3               h15472ef_6    https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
+[conda] mkl                       2020.2                      256    defaults
+[conda] mkl-service               2.3.0            py37h8f50634_2    https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
+[conda] mkl_fft                   1.2.0            py37h161383b_1    https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
+[conda] mkl_random                1.2.0            py37h9fdb41a_1    https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
+[conda] numpy                     1.19.4                   pypi_0    pypi
+[conda] numpy-base                1.19.2           py37hfa32c7d_0    defaults
+[conda] pytorch                   1.7.0           py3.7_cuda11.0.221_cudnn8.0.3_0    pytorch
+[conda] torchreid                 1.0.6                     dev_0    <develop>
+[conda] torchvision               0.8.1                py37_cu110    pytorch
+        Pillow (8.0.1)
+
+Building train transforms ...
++ resize to 384x128
++ random flip
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+Building test transforms ...
++ resize to 384x128
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+=> Loading train (source) dataset
+=> Loaded Occluded_Duke
+  ----------------------------------------
+  subset   | # ids | # images | # cameras
+  ----------------------------------------
+  train    |   702 |    15618 |         8
+  query    |   519 |     2210 |         8
+  gallery  |  1110 |    17661 |         8
+  ----------------------------------------
+=> Loading test (target) dataset
+=> Loaded Occluded_Duke
+  ----------------------------------------
+  subset   | # ids | # images | # cameras
+  ----------------------------------------
+  train    |   702 |    15618 |         8
+  query    |   519 |     2210 |         8
+  gallery  |  1110 |    17661 |         8
+  ----------------------------------------
+
+
+  **************** Summary ****************
+  train            : ['occludedduke']
+  # train datasets : 1
+  # train ids      : 702
+  # train images   : 15618
+  # train cameras  : 8
+  test             : ['occludedduke']
+  *****************************************
+
+
+Building model: bfe
+Building softmax-engine for image-reid
+=> Start training
+* Only train ['res_part1', 'res_part2', 'classifier1', 'classifier2', 'reduction1', 'reduction2', 'batch_drop', 'batch_crop', 'batch_erase', 'att1', 'att_module2'] (epoch: 1/5)
+Epoch: [1/120][100/244]	Loss 5.9061 (6.2197)	Loss_x1 5.6773 (6.0542)	Loss_x2 5.9199 (6.2362)	Loss_x3 6.0020 (6.2477)	Loss_mask 0.0215 (0.0302)	Loss_max 0.0215 (0.0302)	Lr 0.000300	eta 3:29:35
+Epoch: [1/120][200/244]	Loss 5.5179 (5.9827)	Loss_x1 5.2207 (5.7550)	Loss_x2 5.4267 (5.9574)	Loss_x3 5.7275 (6.0862)	Loss_mask 0.0158 (0.0254)	Loss_max 0.0158 (0.0254)	Lr 0.000300	eta 2:30:02
+* Only train ['res_part1', 'res_part2', 'classifier1', 'classifier2', 'reduction1', 'reduction2', 'batch_drop', 'batch_crop', 'batch_erase', 'att1', 'att_module2'] (epoch: 2/5)
+Epoch: [2/120][100/244]	Loss 5.3640 (5.2918)	Loss_x1 4.9886 (4.8513)	Loss_x2 5.1986 (5.0863)	Loss_x3 5.6440 (5.5869)	Loss_mask 0.0097 (0.0178)	Loss_max 0.0097 (0.0178)	Lr 0.000300	eta 1:36:43
+Epoch: [2/120][200/244]	Loss 4.9880 (5.1954)	Loss_x1 4.5928 (4.7312)	Loss_x2 4.6994 (4.9461)	Loss_x3 5.3057 (5.5090)	Loss_mask 0.0163 (0.0181)	Loss_max 0.0163 (0.0181)	Lr 0.000300	eta 1:33:40
+* Only train ['res_part1', 'res_part2', 'classifier1', 'classifier2', 'reduction1', 'reduction2', 'batch_drop', 'batch_crop', 'batch_erase', 'att1', 'att_module2'] (epoch: 3/5)
+Epoch: [3/120][100/244]	Loss 4.4067 (4.7374)	Loss_x1 3.8779 (4.1881)	Loss_x2 4.0090 (4.3555)	Loss_x3 4.7841 (5.1022)	Loss_mask 0.0105 (0.0176)	Loss_max 0.0105 (0.0176)	Lr 0.000300	eta 1:37:24
+Epoch: [3/120][200/244]	Loss 4.5803 (4.6894)	Loss_x1 3.9544 (4.1164)	Loss_x2 4.1545 (4.2782)	Loss_x3 4.9715 (5.0637)	Loss_mask 0.0129 (0.0171)	Loss_max 0.0129 (0.0171)	Lr 0.000300	eta 1:33:59
+* Only train ['res_part1', 'res_part2', 'classifier1', 'classifier2', 'reduction1', 'reduction2', 'batch_drop', 'batch_crop', 'batch_erase', 'att1', 'att_module2'] (epoch: 4/5)
+Epoch: [4/120][100/244]	Loss 4.3898 (4.2670)	Loss_x1 3.8007 (3.6576)	Loss_x2 3.8515 (3.7895)	Loss_x3 4.7979 (4.6591)	Loss_mask 0.0103 (0.0159)	Loss_max 0.0103 (0.0159)	Lr 0.000300	eta 1:35:56
+Epoch: [4/120][200/244]	Loss 4.4617 (4.2501)	Loss_x1 3.7294 (3.6224)	Loss_x2 3.9050 (3.7431)	Loss_x3 4.8802 (4.6478)	Loss_mask 0.0136 (0.0163)	Loss_max 0.0136 (0.0163)	Lr 0.000300	eta 1:32:41
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0524 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 11.1%
+CMC curve
+Rank-1  : 17.1%
+Rank-3  : 25.1%
+Rank-5  : 29.5%
+Rank-10 : 35.4%
+Checkpoint saved to "log/bs48/model.pth.tar-4"
+* Only train ['res_part1', 'res_part2', 'classifier1', 'classifier2', 'reduction1', 'reduction2', 'batch_drop', 'batch_crop', 'batch_erase', 'att1', 'att_module2'] (epoch: 5/5)
+Epoch: [5/120][100/244]	Loss 3.9918 (3.8999)	Loss_x1 3.1268 (3.2416)	Loss_x2 3.4334 (3.3631)	Loss_x3 4.4072 (4.3036)	Loss_mask 0.0217 (0.0171)	Loss_max 0.0217 (0.0171)	Lr 0.000300	eta 1:36:10
+Epoch: [5/120][200/244]	Loss 3.9259 (3.8583)	Loss_x1 3.3141 (3.1923)	Loss_x2 3.2027 (3.2991)	Loss_x3 4.3429 (4.2650)	Loss_mask 0.0196 (0.0174)	Loss_max 0.0196 (0.0174)	Lr 0.000300	eta 1:32:18
+Epoch: [6/120][100/244]	Loss 2.5485 (3.5500)	Loss_x1 2.3015 (3.0214)	Loss_x2 2.5662 (3.2436)	Loss_x3 2.6669 (3.8478)	Loss_mask 0.0143 (0.0169)	Loss_max 0.0143 (0.0169)	Lr 0.000300	eta 4:05:42
+Epoch: [6/120][200/244]	Loss 1.8695 (2.9196)	Loss_x1 1.7979 (2.5777)	Loss_x2 1.9573 (2.7890)	Loss_x3 1.8281 (3.0905)	Loss_mask 0.0036 (0.0134)	Loss_max 0.0036 (0.0134)	Lr 0.000300	eta 3:57:55
+Epoch: [7/120][100/244]	Loss 1.3256 (1.5648)	Loss_x1 1.3105 (1.4973)	Loss_x2 1.3501 (1.6470)	Loss_x3 1.2734 (1.5106)	Loss_mask 0.0133 (0.0072)	Loss_max 0.0133 (0.0072)	Lr 0.000300	eta 3:54:55
+Epoch: [7/120][200/244]	Loss 1.5767 (1.5369)	Loss_x1 1.4575 (1.4809)	Loss_x2 1.7197 (1.6137)	Loss_x3 1.4847 (1.4785)	Loss_mask 0.0084 (0.0069)	Loss_max 0.0084 (0.0069)	Lr 0.000300	eta 3:51:52
+Epoch: [8/120][100/244]	Loss 1.2621 (1.3254)	Loss_x1 1.2644 (1.2791)	Loss_x2 1.2889 (1.4024)	Loss_x3 1.2198 (1.2622)	Loss_mask 0.0036 (0.0055)	Loss_max 0.0036 (0.0055)	Lr 0.000300	eta 3:53:13
+Epoch: [8/120][200/244]	Loss 1.2818 (1.3258)	Loss_x1 1.2663 (1.2862)	Loss_x2 1.3341 (1.3976)	Loss_x3 1.2300 (1.2627)	Loss_mask 0.0031 (0.0053)	Loss_max 0.0031 (0.0053)	Lr 0.000300	eta 3:49:35
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0203 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 31.6%
+CMC curve
+Rank-1  : 40.0%
+Rank-3  : 52.6%
+Rank-5  : 58.6%
+Rank-10 : 65.2%
+Checkpoint saved to "log/bs48/model.pth.tar-8"
+Epoch: [9/120][100/244]	Loss 1.1614 (1.2336)	Loss_x1 1.1704 (1.2143)	Loss_x2 1.1762 (1.2848)	Loss_x3 1.1291 (1.1810)	Loss_mask 0.0024 (0.0041)	Loss_max 0.0024 (0.0041)	Lr 0.000300	eta 3:51:42
+Epoch: [9/120][200/244]	Loss 1.3238 (1.2436)	Loss_x1 1.3513 (1.2324)	Loss_x2 1.3315 (1.2877)	Loss_x3 1.2777 (1.1923)	Loss_mask 0.0027 (0.0036)	Loss_max 0.0027 (0.0036)	Lr 0.000300	eta 3:48:02
+Epoch: [10/120][100/244]	Loss 1.2149 (1.2190)	Loss_x1 1.2211 (1.1981)	Loss_x2 1.2460 (1.2747)	Loss_x3 1.1701 (1.1648)	Loss_mask 0.0015 (0.0033)	Loss_max 0.0015 (0.0033)	Lr 0.000300	eta 3:49:45
+Epoch: [10/120][200/244]	Loss 1.3395 (1.2239)	Loss_x1 1.2542 (1.2104)	Loss_x2 1.4694 (1.2729)	Loss_x3 1.2506 (1.1710)	Loss_mask 0.0040 (0.0031)	Loss_max 0.0040 (0.0031)	Lr 0.000300	eta 3:45:54
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0201 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 31.8%
+CMC curve
+Rank-1  : 38.9%
+Rank-3  : 51.1%
+Rank-5  : 56.3%
+Rank-10 : 63.4%
+Checkpoint saved to "log/bs48/model.pth.tar-10"
+Epoch: [11/120][100/244]	Loss 1.2255 (1.1978)	Loss_x1 1.2226 (1.1886)	Loss_x2 1.2748 (1.2409)	Loss_x3 1.1660 (1.1498)	Loss_mask 0.0024 (0.0026)	Loss_max 0.0024 (0.0026)	Lr 0.000300	eta 3:49:41
+Epoch: [11/120][200/244]	Loss 1.2104 (1.2081)	Loss_x1 1.1660 (1.1994)	Loss_x2 1.2931 (1.2517)	Loss_x3 1.1511 (1.1592)	Loss_mask 0.0029 (0.0024)	Loss_max 0.0029 (0.0024)	Lr 0.000300	eta 3:45:13
+Epoch: [12/120][100/244]	Loss 1.1356 (1.1821)	Loss_x1 1.1320 (1.1787)	Loss_x2 1.1636 (1.2199)	Loss_x3 1.1061 (1.1375)	Loss_mask 0.0012 (0.0016)	Loss_max 0.0012 (0.0016)	Lr 0.000300	eta 3:45:56
+Epoch: [12/120][200/244]	Loss 1.1634 (1.1891)	Loss_x1 1.1889 (1.1815)	Loss_x2 1.1678 (1.2323)	Loss_x3 1.1286 (1.1416)	Loss_mask 0.0010 (0.0017)	Loss_max 0.0010 (0.0017)	Lr 0.000300	eta 3:42:15
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0215 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 32.1%
+CMC curve
+Rank-1  : 40.1%
+Rank-3  : 52.2%
+Rank-5  : 58.4%
+Rank-10 : 65.6%
+Checkpoint saved to "log/bs48/model.pth.tar-12"
+Epoch: [13/120][100/244]	Loss 1.1261 (1.1827)	Loss_x1 1.1372 (1.1728)	Loss_x2 1.1384 (1.2283)	Loss_x3 1.0998 (1.1356)	Loss_mask 0.0007 (0.0015)	Loss_max 0.0007 (0.0015)	Lr 0.000300	eta 3:42:33
+Epoch: [13/120][200/244]	Loss 1.2193 (1.1929)	Loss_x1 1.2350 (1.1868)	Loss_x2 1.2345 (1.2357)	Loss_x3 1.1841 (1.1458)	Loss_mask 0.0008 (0.0014)	Loss_max 0.0008 (0.0014)	Lr 0.000300	eta 3:39:19
+Epoch: [14/120][100/244]	Loss 1.1958 (1.1726)	Loss_x1 1.2212 (1.1638)	Loss_x2 1.2055 (1.2166)	Loss_x3 1.1571 (1.1263)	Loss_mask 0.0005 (0.0016)	Loss_max 0.0005 (0.0016)	Lr 0.000300	eta 3:42:06
+Epoch: [14/120][200/244]	Loss 1.2543 (1.1821)	Loss_x1 1.2314 (1.1754)	Loss_x2 1.3345 (1.2248)	Loss_x3 1.1803 (1.1357)	Loss_mask 0.0013 (0.0014)	Loss_max 0.0013 (0.0014)	Lr 0.000300	eta 3:38:01
+Epoch: [15/120][100/244]	Loss 1.1368 (1.1718)	Loss_x1 1.1434 (1.1646)	Loss_x2 1.1565 (1.2146)	Loss_x3 1.1068 (1.1269)	Loss_mask 0.0008 (0.0009)	Loss_max 0.0008 (0.0009)	Lr 0.000300	eta 3:38:04
+Epoch: [15/120][200/244]	Loss 1.1650 (1.1817)	Loss_x1 1.1729 (1.1752)	Loss_x2 1.1899 (1.2245)	Loss_x3 1.1286 (1.1362)	Loss_mask 0.0006 (0.0009)	Loss_max 0.0006 (0.0009)	Lr 0.000300	eta 3:35:19
+Epoch: [16/120][100/244]	Loss 1.2309 (1.1643)	Loss_x1 1.1721 (1.1472)	Loss_x2 1.3386 (1.2171)	Loss_x3 1.1591 (1.1190)	Loss_mask 0.0008 (0.0008)	Loss_max 0.0008 (0.0008)	Lr 0.000300	eta 3:36:30
+Epoch: [16/120][200/244]	Loss 1.2352 (1.1660)	Loss_x1 1.1578 (1.1544)	Loss_x2 1.3544 (1.2133)	Loss_x3 1.1644 (1.1213)	Loss_mask 0.0011 (0.0009)	Loss_max 0.0011 (0.0009)	Lr 0.000300	eta 3:33:02
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0202 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 34.0%
+CMC curve
+Rank-1  : 42.4%
+Rank-3  : 53.8%
+Rank-5  : 59.4%
+Rank-10 : 66.6%
+Checkpoint saved to "log/bs48/model.pth.tar-16"
+Epoch: [17/120][100/244]	Loss 1.1867 (1.1543)	Loss_x1 1.1338 (1.1507)	Loss_x2 1.2853 (1.1916)	Loss_x3 1.1226 (1.1137)	Loss_mask 0.0005 (0.0006)	Loss_max 0.0005 (0.0006)	Lr 0.000300	eta 3:36:02
+Epoch: [17/120][200/244]	Loss 1.1210 (1.1623)	Loss_x1 1.1183 (1.1553)	Loss_x2 1.1466 (1.2038)	Loss_x3 1.0943 (1.1201)	Loss_mask 0.0008 (0.0006)	Loss_max 0.0008 (0.0006)	Lr 0.000300	eta 3:32:08
+Epoch: [18/120][100/244]	Loss 1.1093 (1.1604)	Loss_x1 1.1152 (1.1509)	Loss_x2 1.1272 (1.2048)	Loss_x3 1.0837 (1.1176)	Loss_mask 0.0003 (0.0005)	Loss_max 0.0003 (0.0005)	Lr 0.000300	eta 3:33:48
+Epoch: [18/120][200/244]	Loss 1.2171 (1.1648)	Loss_x1 1.1898 (1.1556)	Loss_x2 1.2836 (1.2092)	Loss_x3 1.1681 (1.1215)	Loss_mask 0.0008 (0.0005)	Loss_max 0.0008 (0.0005)	Lr 0.000300	eta 3:30:00
+Epoch: [19/120][100/244]	Loss 1.1888 (1.1613)	Loss_x1 1.1578 (1.1436)	Loss_x2 1.2647 (1.2152)	Loss_x3 1.1322 (1.1160)	Loss_mask 0.0005 (0.0004)	Loss_max 0.0005 (0.0004)	Lr 0.000300	eta 3:30:54
+Epoch: [19/120][200/244]	Loss 1.1895 (1.1597)	Loss_x1 1.1425 (1.1514)	Loss_x2 1.2798 (1.2032)	Loss_x3 1.1311 (1.1172)	Loss_mask 0.0004 (0.0004)	Loss_max 0.0004 (0.0004)	Lr 0.000300	eta 3:27:44
+Epoch: [20/120][100/244]	Loss 1.1539 (1.1465)	Loss_x1 1.1260 (1.1312)	Loss_x2 1.2108 (1.1934)	Loss_x3 1.1190 (1.1073)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000300	eta 3:28:50
+Epoch: [20/120][200/244]	Loss 1.1587 (1.1532)	Loss_x1 1.1658 (1.1430)	Loss_x2 1.1871 (1.1960)	Loss_x3 1.1198 (1.1137)	Loss_mask 0.0003 (0.0003)	Loss_max 0.0003 (0.0003)	Lr 0.000300	eta 3:25:48
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0213 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 36.5%
+CMC curve
+Rank-1  : 47.2%
+Rank-3  : 59.1%
+Rank-5  : 63.9%
+Rank-10 : 69.7%
+Checkpoint saved to "log/bs48/model.pth.tar-20"
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0196 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 36.5%
+CMC curve
+Rank-1  : 47.2%
+Rank-3  : 59.1%
+Rank-5  : 63.9%
+Rank-10 : 69.7%
+Checkpoint saved to "log/bs48/model.pth.tar-20"
+Epoch: [21/120][100/244]	Loss 1.0651 (1.1012)	Loss_x1 1.0640 (1.0902)	Loss_x2 1.0766 (1.1351)	Loss_x3 1.0541 (1.0742)	Loss_mask 0.0001 (0.0003)	Loss_max 0.0001 (0.0003)	Lr 0.000030	eta 3:25:11
+Epoch: [21/120][200/244]	Loss 1.0740 (1.0907)	Loss_x1 1.0732 (1.0782)	Loss_x2 1.0923 (1.1249)	Loss_x3 1.0548 (1.0652)	Loss_mask 0.0004 (0.0003)	Loss_max 0.0004 (0.0003)	Lr 0.000030	eta 3:22:11
+Epoch: [22/120][100/244]	Loss 1.0715 (1.0661)	Loss_x1 1.0670 (1.0551)	Loss_x2 1.0977 (1.0952)	Loss_x3 1.0481 (1.0451)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 3:24:59
+Epoch: [22/120][200/244]	Loss 1.0552 (1.0638)	Loss_x1 1.0496 (1.0544)	Loss_x2 1.0775 (1.0911)	Loss_x3 1.0368 (1.0433)	Loss_mask 0.0003 (0.0002)	Loss_max 0.0003 (0.0002)	Lr 0.000030	eta 3:21:26
+Epoch: [23/120][100/244]	Loss 1.0463 (1.0594)	Loss_x1 1.0406 (1.0484)	Loss_x2 1.0635 (1.0888)	Loss_x3 1.0336 (1.0381)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 3:21:54
+Epoch: [23/120][200/244]	Loss 1.0462 (1.0575)	Loss_x1 1.0460 (1.0478)	Loss_x2 1.0616 (1.0851)	Loss_x3 1.0301 (1.0370)	Loss_mask 0.0001 (0.0003)	Loss_max 0.0001 (0.0003)	Lr 0.000030	eta 3:19:01
+Epoch: [24/120][100/244]	Loss 1.0421 (1.0549)	Loss_x1 1.0399 (1.0448)	Loss_x2 1.0564 (1.0829)	Loss_x3 1.0291 (1.0344)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 3:19:55
+Epoch: [24/120][200/244]	Loss 1.0723 (1.0553)	Loss_x1 1.0474 (1.0451)	Loss_x2 1.1220 (1.0836)	Loss_x3 1.0426 (1.0344)	Loss_mask 0.0003 (0.0003)	Loss_max 0.0003 (0.0003)	Lr 0.000030	eta 3:16:54
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0203 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 44.6%
+CMC curve
+Rank-1  : 53.2%
+Rank-3  : 65.3%
+Rank-5  : 70.2%
+Rank-10 : 75.2%
+Checkpoint saved to "log/bs48/model.pth.tar-24"
+Epoch: [25/120][100/244]	Loss 1.0541 (1.0534)	Loss_x1 1.0590 (1.0423)	Loss_x2 1.0661 (1.0823)	Loss_x3 1.0360 (1.0329)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 3:17:50
+Epoch: [25/120][200/244]	Loss 1.0662 (1.0522)	Loss_x1 1.0472 (1.0424)	Loss_x2 1.1091 (1.0793)	Loss_x3 1.0381 (1.0322)	Loss_mask 0.0004 (0.0003)	Loss_max 0.0004 (0.0003)	Lr 0.000030	eta 3:14:52
+Epoch: [26/120][100/244]	Loss 1.0417 (1.0490)	Loss_x1 1.0365 (1.0413)	Loss_x2 1.0619 (1.0737)	Loss_x3 1.0252 (1.0297)	Loss_mask 0.0003 (0.0003)	Loss_max 0.0003 (0.0003)	Lr 0.000030	eta 3:17:37
+Epoch: [26/120][200/244]	Loss 1.0718 (1.0493)	Loss_x1 1.0440 (1.0414)	Loss_x2 1.1234 (1.0742)	Loss_x3 1.0425 (1.0299)	Loss_mask 0.0004 (0.0003)	Loss_max 0.0004 (0.0003)	Lr 0.000030	eta 3:13:40
+Epoch: [27/120][100/244]	Loss 1.0325 (1.0472)	Loss_x1 1.0330 (1.0403)	Loss_x2 1.0434 (1.0707)	Loss_x3 1.0204 (1.0283)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 3:14:06
+Epoch: [27/120][200/244]	Loss 1.0445 (1.0482)	Loss_x1 1.0396 (1.0409)	Loss_x2 1.0644 (1.0724)	Loss_x3 1.0282 (1.0289)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 3:11:03
+Epoch: [28/120][100/244]	Loss 1.0637 (1.0491)	Loss_x1 1.0369 (1.0394)	Loss_x2 1.1152 (1.0767)	Loss_x3 1.0333 (1.0287)	Loss_mask 0.0004 (0.0003)	Loss_max 0.0004 (0.0003)	Lr 0.000030	eta 3:11:36
+Epoch: [28/120][200/244]	Loss 1.0447 (1.0500)	Loss_x1 1.0351 (1.0403)	Loss_x2 1.0710 (1.0777)	Loss_x3 1.0264 (1.0294)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 3:08:40
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0209 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 46.8%
+CMC curve
+Rank-1  : 55.5%
+Rank-3  : 67.3%
+Rank-5  : 71.9%
+Rank-10 : 77.2%
+Checkpoint saved to "log/bs48/model.pth.tar-28"
+Epoch: [29/120][100/244]	Loss 1.0481 (1.0474)	Loss_x1 1.0308 (1.0392)	Loss_x2 1.0855 (1.0733)	Loss_x3 1.0246 (1.0272)	Loss_mask 0.0003 (0.0003)	Loss_max 0.0003 (0.0003)	Lr 0.000030	eta 3:09:39
+Epoch: [29/120][200/244]	Loss 1.0449 (1.0474)	Loss_x1 1.0465 (1.0396)	Loss_x2 1.0597 (1.0729)	Loss_x3 1.0275 (1.0272)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 3:06:31
+Epoch: [30/120][100/244]	Loss 1.0608 (1.0483)	Loss_x1 1.0488 (1.0391)	Loss_x2 1.0940 (1.0761)	Loss_x3 1.0361 (1.0270)	Loss_mask 0.0005 (0.0003)	Loss_max 0.0005 (0.0003)	Lr 0.000030	eta 3:07:30
+Epoch: [30/120][200/244]	Loss 1.0406 (1.0482)	Loss_x1 1.0432 (1.0400)	Loss_x2 1.0538 (1.0748)	Loss_x3 1.0236 (1.0271)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 3:04:41
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0208 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 47.7%
+CMC curve
+Rank-1  : 57.1%
+Rank-3  : 68.1%
+Rank-5  : 72.6%
+Rank-10 : 77.8%
+Checkpoint saved to "log/bs48/model.pth.tar-30"
+Epoch: [31/120][100/244]	Loss 1.0459 (1.0460)	Loss_x1 1.0550 (1.0377)	Loss_x2 1.0538 (1.0724)	Loss_x3 1.0279 (1.0255)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 3:06:31
+Epoch: [31/120][200/244]	Loss 1.0301 (1.0463)	Loss_x1 1.0336 (1.0390)	Loss_x2 1.0387 (1.0716)	Loss_x3 1.0171 (1.0259)	Loss_mask 0.0003 (0.0003)	Loss_max 0.0003 (0.0003)	Lr 0.000030	eta 3:02:55
+Epoch: [32/120][100/244]	Loss 1.0425 (1.0437)	Loss_x1 1.0405 (1.0374)	Loss_x2 1.0611 (1.0672)	Loss_x3 1.0239 (1.0243)	Loss_mask 0.0004 (0.0003)	Loss_max 0.0004 (0.0003)	Lr 0.000030	eta 3:05:11
+Epoch: [32/120][200/244]	Loss 1.0435 (1.0457)	Loss_x1 1.0414 (1.0392)	Loss_x2 1.0619 (1.0701)	Loss_x3 1.0260 (1.0254)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 3:01:53
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0200 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.0%
+CMC curve
+Rank-1  : 56.8%
+Rank-3  : 68.1%
+Rank-5  : 73.0%
+Rank-10 : 77.7%
+Checkpoint saved to "log/bs48/model.pth.tar-32"
+Epoch: [33/120][100/244]	Loss 1.0405 (1.0442)	Loss_x1 1.0323 (1.0372)	Loss_x2 1.0651 (1.0687)	Loss_x3 1.0223 (1.0244)	Loss_mask 0.0003 (0.0003)	Loss_max 0.0003 (0.0003)	Lr 0.000030	eta 3:02:15
+Epoch: [33/120][200/244]	Loss 1.0454 (1.0457)	Loss_x1 1.0574 (1.0387)	Loss_x2 1.0511 (1.0705)	Loss_x3 1.0265 (1.0253)	Loss_mask 0.0003 (0.0003)	Loss_max 0.0003 (0.0003)	Lr 0.000030	eta 2:58:42
+Epoch: [34/120][100/244]	Loss 1.0289 (1.0431)	Loss_x1 1.0277 (1.0373)	Loss_x2 1.0418 (1.0665)	Loss_x3 1.0162 (1.0232)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 2:59:46
+Epoch: [34/120][200/244]	Loss 1.0434 (1.0451)	Loss_x1 1.0463 (1.0382)	Loss_x2 1.0566 (1.0704)	Loss_x3 1.0260 (1.0243)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 2:56:41
+Epoch: [35/120][100/244]	Loss 1.0264 (1.0436)	Loss_x1 1.0304 (1.0369)	Loss_x2 1.0338 (1.0685)	Loss_x3 1.0140 (1.0231)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 2:57:47
+Epoch: [35/120][200/244]	Loss 1.0703 (1.0430)	Loss_x1 1.0412 (1.0370)	Loss_x2 1.1286 (1.0668)	Loss_x3 1.0347 (1.0229)	Loss_mask 0.0003 (0.0003)	Loss_max 0.0003 (0.0003)	Lr 0.000030	eta 2:54:37
+Epoch: [36/120][100/244]	Loss 1.0425 (1.0453)	Loss_x1 1.0266 (1.0357)	Loss_x2 1.0771 (1.0735)	Loss_x3 1.0209 (1.0239)	Loss_mask 0.0003 (0.0003)	Loss_max 0.0003 (0.0003)	Lr 0.000030	eta 2:55:40
+Epoch: [36/120][200/244]	Loss 1.0452 (1.0454)	Loss_x1 1.0292 (1.0367)	Loss_x2 1.0801 (1.0729)	Loss_x3 1.0233 (1.0239)	Loss_mask 0.0003 (0.0003)	Loss_max 0.0003 (0.0003)	Lr 0.000030	eta 2:52:57
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0205 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.2%
+CMC curve
+Rank-1  : 57.4%
+Rank-3  : 68.5%
+Rank-5  : 73.0%
+Rank-10 : 78.5%
+Checkpoint saved to "log/bs48/model.pth.tar-36"
+Epoch: [37/120][100/244]	Loss 1.0337 (1.0415)	Loss_x1 1.0374 (1.0347)	Loss_x2 1.0448 (1.0658)	Loss_x3 1.0179 (1.0216)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 2:52:08
+Epoch: [37/120][200/244]	Loss 1.1065 (1.0416)	Loss_x1 1.0643 (1.0359)	Loss_x2 1.1802 (1.0648)	Loss_x3 1.0654 (1.0219)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 2:49:34
+Epoch: [38/120][100/244]	Loss 1.0635 (1.0411)	Loss_x1 1.0467 (1.0336)	Loss_x2 1.1045 (1.0664)	Loss_x3 1.0350 (1.0209)	Loss_mask 0.0005 (0.0003)	Loss_max 0.0005 (0.0003)	Lr 0.000030	eta 2:51:07
+Epoch: [38/120][200/244]	Loss 1.0454 (1.0440)	Loss_x1 1.0436 (1.0356)	Loss_x2 1.0644 (1.0708)	Loss_x3 1.0266 (1.0228)	Loss_mask 0.0003 (0.0003)	Loss_max 0.0003 (0.0003)	Lr 0.000030	eta 2:48:25
+Epoch: [39/120][100/244]	Loss 1.0471 (1.0433)	Loss_x1 1.0303 (1.0344)	Loss_x2 1.0836 (1.0708)	Loss_x3 1.0246 (1.0219)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 2:50:29
+Epoch: [39/120][200/244]	Loss 1.0681 (1.0431)	Loss_x1 1.0465 (1.0349)	Loss_x2 1.1128 (1.0699)	Loss_x3 1.0404 (1.0218)	Loss_mask 0.0004 (0.0003)	Loss_max 0.0004 (0.0003)	Lr 0.000030	eta 2:46:45
+Epoch: [40/120][100/244]	Loss 1.0274 (1.0429)	Loss_x1 1.0232 (1.0328)	Loss_x2 1.0437 (1.0715)	Loss_x3 1.0141 (1.0213)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 2:48:23
+Epoch: [40/120][200/244]	Loss 1.0318 (1.0430)	Loss_x1 1.0366 (1.0342)	Loss_x2 1.0408 (1.0705)	Loss_x3 1.0172 (1.0215)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000030	eta 2:45:11
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0203 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.4%
+CMC curve
+Rank-1  : 59.0%
+Rank-3  : 69.0%
+Rank-5  : 73.3%
+Rank-10 : 79.3%
+Checkpoint saved to "log/bs48/model.pth.tar-40"
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0203 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.4%
+CMC curve
+Rank-1  : 59.0%
+Rank-3  : 69.0%
+Rank-5  : 73.3%
+Rank-10 : 79.3%
+Checkpoint saved to "log/bs48/model.pth.tar-40"
+Epoch: [41/120][100/244]	Loss 1.0495 (1.0379)	Loss_x1 1.0247 (1.0279)	Loss_x2 1.0978 (1.0654)	Loss_x3 1.0204 (1.0177)	Loss_mask 0.0006 (0.0003)	Loss_max 0.0006 (0.0003)	Lr 0.000003	eta 2:45:49
+Epoch: [41/120][200/244]	Loss 1.0436 (1.0366)	Loss_x1 1.0283 (1.0269)	Loss_x2 1.0808 (1.0634)	Loss_x3 1.0177 (1.0169)	Loss_mask 0.0006 (0.0003)	Loss_max 0.0006 (0.0003)	Lr 0.000003	eta 2:42:40
+Epoch: [42/120][100/244]	Loss 1.0242 (1.0359)	Loss_x1 1.0263 (1.0245)	Loss_x2 1.0339 (1.0642)	Loss_x3 1.0114 (1.0160)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 2:42:04
+Epoch: [42/120][200/244]	Loss 1.0218 (1.0337)	Loss_x1 1.0181 (1.0237)	Loss_x2 1.0372 (1.0599)	Loss_x3 1.0090 (1.0148)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 2:39:28
+Epoch: [43/120][100/244]	Loss 1.0210 (1.0325)	Loss_x1 1.0223 (1.0230)	Loss_x2 1.0308 (1.0579)	Loss_x3 1.0090 (1.0142)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 2:41:23
+Epoch: [43/120][200/244]	Loss 1.0515 (1.0321)	Loss_x1 1.0204 (1.0231)	Loss_x2 1.1067 (1.0569)	Loss_x3 1.0210 (1.0139)	Loss_mask 0.0005 (0.0003)	Loss_max 0.0005 (0.0003)	Lr 0.000003	eta 2:38:11
+Epoch: [44/120][100/244]	Loss 1.0515 (1.0327)	Loss_x1 1.0221 (1.0225)	Loss_x2 1.1047 (1.0590)	Loss_x3 1.0218 (1.0140)	Loss_mask 0.0004 (0.0003)	Loss_max 0.0004 (0.0003)	Lr 0.000003	eta 2:38:47
+Epoch: [44/120][200/244]	Loss 1.0224 (1.0329)	Loss_x1 1.0240 (1.0226)	Loss_x2 1.0329 (1.0594)	Loss_x3 1.0096 (1.0142)	Loss_mask 0.0001 (0.0003)	Loss_max 0.0001 (0.0003)	Lr 0.000003	eta 2:35:57
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0198 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 49.1%
+CMC curve
+Rank-1  : 59.5%
+Rank-3  : 70.2%
+Rank-5  : 74.3%
+Rank-10 : 80.3%
+Checkpoint saved to "log/bs48/model.pth.tar-44"
+Epoch: [45/120][100/244]	Loss 1.0317 (1.0316)	Loss_x1 1.0199 (1.0236)	Loss_x2 1.0591 (1.0550)	Loss_x3 1.0135 (1.0138)	Loss_mask 0.0004 (0.0003)	Loss_max 0.0004 (0.0003)	Lr 0.000003	eta 2:35:59
+Epoch: [45/120][200/244]	Loss 1.0288 (1.0322)	Loss_x1 1.0260 (1.0231)	Loss_x2 1.0476 (1.0571)	Loss_x3 1.0117 (1.0139)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 2:33:36
+Epoch: [46/120][100/244]	Loss 1.0321 (1.0345)	Loss_x1 1.0153 (1.0231)	Loss_x2 1.0663 (1.0629)	Loss_x3 1.0121 (1.0148)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 2:35:13
+Epoch: [46/120][200/244]	Loss 1.0492 (1.0336)	Loss_x1 1.0202 (1.0227)	Loss_x2 1.1017 (1.0611)	Loss_x3 1.0196 (1.0144)	Loss_mask 0.0006 (0.0003)	Loss_max 0.0006 (0.0003)	Lr 0.000003	eta 2:32:02
+Epoch: [47/120][100/244]	Loss 1.0310 (1.0330)	Loss_x1 1.0176 (1.0231)	Loss_x2 1.0611 (1.0590)	Loss_x3 1.0110 (1.0143)	Loss_mask 0.0006 (0.0003)	Loss_max 0.0006 (0.0003)	Lr 0.000003	eta 2:31:40
+Epoch: [47/120][200/244]	Loss 1.0163 (1.0321)	Loss_x1 1.0165 (1.0229)	Loss_x2 1.0259 (1.0573)	Loss_x3 1.0057 (1.0138)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 2:29:27
+Epoch: [48/120][100/244]	Loss 1.0377 (1.0326)	Loss_x1 1.0243 (1.0238)	Loss_x2 1.0706 (1.0574)	Loss_x3 1.0155 (1.0142)	Loss_mask 0.0003 (0.0003)	Loss_max 0.0003 (0.0003)	Lr 0.000003	eta 2:31:44
+Epoch: [48/120][200/244]	Loss 1.0423 (1.0326)	Loss_x1 1.0380 (1.0228)	Loss_x2 1.0653 (1.0585)	Loss_x3 1.0217 (1.0138)	Loss_mask 0.0003 (0.0003)	Loss_max 0.0003 (0.0003)	Lr 0.000003	eta 2:28:17
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0203 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 49.2%
+CMC curve
+Rank-1  : 59.5%
+Rank-3  : 70.5%
+Rank-5  : 74.6%
+Rank-10 : 79.8%
+Checkpoint saved to "log/bs48/model.pth.tar-48"
+Epoch: [49/120][100/244]	Loss 1.0191 (1.0343)	Loss_x1 1.0188 (1.0223)	Loss_x2 1.0308 (1.0632)	Loss_x3 1.0069 (1.0145)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 2:28:37
+Epoch: [49/120][200/244]	Loss 1.0238 (1.0340)	Loss_x1 1.0231 (1.0226)	Loss_x2 1.0373 (1.0620)	Loss_x3 1.0098 (1.0144)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 2:25:46
+Epoch: [50/120][100/244]	Loss 1.0263 (1.0336)	Loss_x1 1.0120 (1.0231)	Loss_x2 1.0561 (1.0606)	Loss_x3 1.0075 (1.0143)	Loss_mask 0.0006 (0.0003)	Loss_max 0.0006 (0.0003)	Lr 0.000003	eta 2:27:32
+Epoch: [50/120][200/244]	Loss 1.0397 (1.0345)	Loss_x1 1.0234 (1.0229)	Loss_x2 1.0755 (1.0630)	Loss_x3 1.0165 (1.0147)	Loss_mask 0.0006 (0.0003)	Loss_max 0.0006 (0.0003)	Lr 0.000003	eta 2:24:35
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0203 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 49.2%
+CMC curve
+Rank-1  : 60.0%
+Rank-3  : 70.7%
+Rank-5  : 74.3%
+Rank-10 : 79.9%
+Checkpoint saved to "log/bs48/model.pth.tar-50"
+Epoch: [51/120][100/244]	Loss 1.0240 (1.0342)	Loss_x1 1.0256 (1.0232)	Loss_x2 1.0348 (1.0621)	Loss_x3 1.0106 (1.0145)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 2:23:58
+Epoch: [51/120][200/244]	Loss 1.0460 (1.0338)	Loss_x1 1.0160 (1.0230)	Loss_x2 1.0994 (1.0612)	Loss_x3 1.0160 (1.0143)	Loss_mask 0.0006 (0.0003)	Loss_max 0.0006 (0.0003)	Lr 0.000003	eta 2:21:33
+Epoch: [52/120][100/244]	Loss 1.0485 (1.0331)	Loss_x1 1.0296 (1.0227)	Loss_x2 1.0891 (1.0598)	Loss_x3 1.0220 (1.0140)	Loss_mask 0.0007 (0.0003)	Loss_max 0.0007 (0.0003)	Lr 0.000003	eta 2:22:11
+Epoch: [52/120][200/244]	Loss 1.0179 (1.0332)	Loss_x1 1.0137 (1.0226)	Loss_x2 1.0320 (1.0601)	Loss_x3 1.0072 (1.0140)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 2:19:49
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0206 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 49.2%
+CMC curve
+Rank-1  : 59.5%
+Rank-3  : 70.6%
+Rank-5  : 74.3%
+Rank-10 : 79.8%
+Checkpoint saved to "log/bs48/model.pth.tar-52"
+Epoch: [53/120][100/244]	Loss 1.0253 (1.0359)	Loss_x1 1.0251 (1.0221)	Loss_x2 1.0401 (1.0672)	Loss_x3 1.0096 (1.0148)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 2:20:09
+Epoch: [53/120][200/244]	Loss 1.0497 (1.0359)	Loss_x1 1.0295 (1.0225)	Loss_x2 1.0915 (1.0669)	Loss_x3 1.0246 (1.0148)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 2:17:20
+Epoch: [54/120][100/244]	Loss 1.0471 (1.0376)	Loss_x1 1.0222 (1.0220)	Loss_x2 1.0956 (1.0716)	Loss_x3 1.0177 (1.0152)	Loss_mask 0.0007 (0.0004)	Loss_max 0.0007 (0.0004)	Lr 0.000003	eta 2:19:35
+Epoch: [54/120][200/244]	Loss 1.0165 (1.0356)	Loss_x1 1.0133 (1.0226)	Loss_x2 1.0283 (1.0662)	Loss_x3 1.0070 (1.0145)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 2:16:22
+Epoch: [55/120][100/244]	Loss 1.0518 (1.0380)	Loss_x1 1.0199 (1.0230)	Loss_x2 1.1080 (1.0714)	Loss_x3 1.0202 (1.0156)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000003	eta 2:16:51
+Epoch: [55/120][200/244]	Loss 1.0226 (1.0359)	Loss_x1 1.0184 (1.0224)	Loss_x2 1.0398 (1.0673)	Loss_x3 1.0080 (1.0144)	Loss_mask 0.0004 (0.0004)	Loss_max 0.0004 (0.0004)	Lr 0.000003	eta 2:14:05
+Epoch: [56/120][100/244]	Loss 1.0268 (1.0375)	Loss_x1 1.0239 (1.0217)	Loss_x2 1.0424 (1.0717)	Loss_x3 1.0130 (1.0149)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 2:13:22
+Epoch: [56/120][200/244]	Loss 1.0548 (1.0386)	Loss_x1 1.0497 (1.0228)	Loss_x2 1.0833 (1.0734)	Loss_x3 1.0287 (1.0156)	Loss_mask 0.0004 (0.0004)	Loss_max 0.0004 (0.0004)	Lr 0.000003	eta 2:11:07
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0199 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 49.5%
+CMC curve
+Rank-1  : 59.9%
+Rank-3  : 71.3%
+Rank-5  : 74.6%
+Rank-10 : 80.9%
+Checkpoint saved to "log/bs48/model.pth.tar-56"
+Epoch: [57/120][100/244]	Loss 1.0281 (1.0337)	Loss_x1 1.0259 (1.0225)	Loss_x2 1.0453 (1.0620)	Loss_x3 1.0120 (1.0137)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 2:12:15
+Epoch: [57/120][200/244]	Loss 1.0449 (1.0335)	Loss_x1 1.0326 (1.0223)	Loss_x2 1.0787 (1.0618)	Loss_x3 1.0201 (1.0134)	Loss_mask 0.0004 (0.0004)	Loss_max 0.0004 (0.0004)	Lr 0.000003	eta 2:09:25
+Epoch: [58/120][100/244]	Loss 1.0401 (1.0305)	Loss_x1 1.0167 (1.0224)	Loss_x2 1.0851 (1.0545)	Loss_x3 1.0133 (1.0121)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000003	eta 2:09:35
+Epoch: [58/120][200/244]	Loss 1.0736 (1.0315)	Loss_x1 1.0308 (1.0224)	Loss_x2 1.1454 (1.0569)	Loss_x3 1.0336 (1.0126)	Loss_mask 0.0007 (0.0004)	Loss_max 0.0007 (0.0004)	Lr 0.000003	eta 2:07:04
+Epoch: [59/120][100/244]	Loss 1.0459 (1.0320)	Loss_x1 1.0264 (1.0223)	Loss_x2 1.0867 (1.0581)	Loss_x3 1.0206 (1.0129)	Loss_mask 0.0004 (0.0004)	Loss_max 0.0004 (0.0004)	Lr 0.000003	eta 2:07:56
+Epoch: [59/120][200/244]	Loss 1.0223 (1.0319)	Loss_x1 1.0155 (1.0224)	Loss_x2 1.0424 (1.0577)	Loss_x3 1.0077 (1.0127)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 2:05:22
+Epoch: [60/120][100/244]	Loss 1.0317 (1.0315)	Loss_x1 1.0175 (1.0226)	Loss_x2 1.0622 (1.0566)	Loss_x3 1.0132 (1.0127)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 2:05:47
+Epoch: [60/120][200/244]	Loss 1.0196 (1.0309)	Loss_x1 1.0147 (1.0220)	Loss_x2 1.0355 (1.0558)	Loss_x3 1.0075 (1.0124)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 2:03:21
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0206 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 49.4%
+CMC curve
+Rank-1  : 60.1%
+Rank-3  : 70.9%
+Rank-5  : 75.0%
+Rank-10 : 80.3%
+Checkpoint saved to "log/bs48/model.pth.tar-60"
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0207 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 49.4%
+CMC curve
+Rank-1  : 60.1%
+Rank-3  : 70.9%
+Rank-5  : 75.0%
+Rank-10 : 80.3%
+Checkpoint saved to "log/bs48/model.pth.tar-60"
+Epoch: [61/120][100/244]	Loss 1.0283 (1.0320)	Loss_x1 1.0201 (1.0220)	Loss_x2 1.0519 (1.0585)	Loss_x3 1.0106 (1.0127)	Loss_mask 0.0004 (0.0004)	Loss_max 0.0004 (0.0004)	Lr 0.000003	eta 2:03:55
+Epoch: [61/120][200/244]	Loss 1.0166 (1.0316)	Loss_x1 1.0144 (1.0215)	Loss_x2 1.0296 (1.0580)	Loss_x3 1.0048 (1.0125)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 2:01:22
+Epoch: [62/120][100/244]	Loss 1.0179 (1.0318)	Loss_x1 1.0169 (1.0212)	Loss_x2 1.0299 (1.0588)	Loss_x3 1.0060 (1.0125)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 2:01:48
+Epoch: [62/120][200/244]	Loss 1.0197 (1.0305)	Loss_x1 1.0177 (1.0212)	Loss_x2 1.0335 (1.0557)	Loss_x3 1.0070 (1.0120)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:59:32
+Epoch: [63/120][100/244]	Loss 1.0309 (1.0289)	Loss_x1 1.0275 (1.0205)	Loss_x2 1.0507 (1.0525)	Loss_x3 1.0127 (1.0113)	Loss_mask 0.0003 (0.0003)	Loss_max 0.0003 (0.0003)	Lr 0.000003	eta 2:00:00
+Epoch: [63/120][200/244]	Loss 1.0160 (1.0302)	Loss_x1 1.0150 (1.0217)	Loss_x2 1.0271 (1.0545)	Loss_x3 1.0052 (1.0120)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:57:27
+Epoch: [64/120][100/244]	Loss 1.0591 (1.0307)	Loss_x1 1.0256 (1.0215)	Loss_x2 1.1159 (1.0558)	Loss_x3 1.0298 (1.0123)	Loss_mask 0.0003 (0.0004)	Loss_max 0.0003 (0.0004)	Lr 0.000003	eta 1:58:20
+Epoch: [64/120][200/244]	Loss 1.0524 (1.0307)	Loss_x1 1.0315 (1.0214)	Loss_x2 1.0972 (1.0560)	Loss_x3 1.0237 (1.0122)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000003	eta 1:55:30
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0202 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 49.1%
+CMC curve
+Rank-1  : 60.2%
+Rank-3  : 70.8%
+Rank-5  : 74.3%
+Rank-10 : 80.2%
+Checkpoint saved to "log/bs48/model.pth.tar-64"
+Epoch: [65/120][100/244]	Loss 1.0345 (1.0310)	Loss_x1 1.0226 (1.0205)	Loss_x2 1.0638 (1.0575)	Loss_x3 1.0137 (1.0121)	Loss_mask 0.0007 (0.0004)	Loss_max 0.0007 (0.0004)	Lr 0.000003	eta 1:54:47
+Epoch: [65/120][200/244]	Loss 1.0443 (1.0323)	Loss_x1 1.0202 (1.0212)	Loss_x2 1.0904 (1.0599)	Loss_x3 1.0172 (1.0128)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000003	eta 1:52:34
+Epoch: [66/120][100/244]	Loss 1.0260 (1.0326)	Loss_x1 1.0145 (1.0220)	Loss_x2 1.0524 (1.0600)	Loss_x3 1.0078 (1.0130)	Loss_mask 0.0007 (0.0004)	Loss_max 0.0007 (0.0004)	Lr 0.000003	eta 1:53:56
+Epoch: [66/120][200/244]	Loss 1.0447 (1.0317)	Loss_x1 1.0298 (1.0219)	Loss_x2 1.0804 (1.0578)	Loss_x3 1.0196 (1.0126)	Loss_mask 0.0007 (0.0004)	Loss_max 0.0007 (0.0004)	Lr 0.000003	eta 1:51:17
+Epoch: [67/120][100/244]	Loss 1.0199 (1.0319)	Loss_x1 1.0226 (1.0224)	Loss_x2 1.0299 (1.0577)	Loss_x3 1.0063 (1.0129)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:51:19
+Epoch: [67/120][200/244]	Loss 1.0287 (1.0309)	Loss_x1 1.0136 (1.0216)	Loss_x2 1.0593 (1.0563)	Loss_x3 1.0111 (1.0122)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:48:58
+Epoch: [68/120][100/244]	Loss 1.0252 (1.0298)	Loss_x1 1.0186 (1.0209)	Loss_x2 1.0458 (1.0544)	Loss_x3 1.0099 (1.0115)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:49:46
+Epoch: [68/120][200/244]	Loss 1.0353 (1.0303)	Loss_x1 1.0195 (1.0210)	Loss_x2 1.0683 (1.0557)	Loss_x3 1.0156 (1.0117)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:47:13
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0206 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 49.3%
+CMC curve
+Rank-1  : 59.6%
+Rank-3  : 70.9%
+Rank-5  : 74.6%
+Rank-10 : 80.2%
+Checkpoint saved to "log/bs48/model.pth.tar-68"
+Epoch: [69/120][100/244]	Loss 1.0502 (1.0283)	Loss_x1 1.0286 (1.0198)	Loss_x2 1.0959 (1.0521)	Loss_x3 1.0209 (1.0105)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000003	eta 1:46:06
+Epoch: [69/120][200/244]	Loss 1.0165 (1.0305)	Loss_x1 1.0174 (1.0210)	Loss_x2 1.0257 (1.0562)	Loss_x3 1.0058 (1.0118)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:44:15
+Epoch: [70/120][100/244]	Loss 1.0446 (1.0316)	Loss_x1 1.0277 (1.0205)	Loss_x2 1.0831 (1.0592)	Loss_x3 1.0192 (1.0123)	Loss_mask 0.0005 (0.0004)	Loss_max 0.0005 (0.0004)	Lr 0.000003	eta 1:45:46
+Epoch: [70/120][200/244]	Loss 1.0136 (1.0298)	Loss_x1 1.0138 (1.0207)	Loss_x2 1.0233 (1.0546)	Loss_x3 1.0030 (1.0114)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:43:05
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0207 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 49.1%
+CMC curve
+Rank-1  : 59.7%
+Rank-3  : 70.6%
+Rank-5  : 74.1%
+Rank-10 : 79.6%
+Checkpoint saved to "log/bs48/model.pth.tar-70"
+Epoch: [71/120][100/244]	Loss 1.0140 (1.0293)	Loss_x1 1.0125 (1.0213)	Loss_x2 1.0240 (1.0530)	Loss_x3 1.0045 (1.0114)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:42:48
+Epoch: [71/120][200/244]	Loss 1.0198 (1.0283)	Loss_x1 1.0221 (1.0206)	Loss_x2 1.0295 (1.0510)	Loss_x3 1.0067 (1.0108)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:40:33
+Epoch: [72/120][100/244]	Loss 1.0293 (1.0276)	Loss_x1 1.0292 (1.0203)	Loss_x2 1.0453 (1.0499)	Loss_x3 1.0121 (1.0104)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 1:40:42
+Epoch: [72/120][200/244]	Loss 1.0280 (1.0287)	Loss_x1 1.0174 (1.0207)	Loss_x2 1.0540 (1.0521)	Loss_x3 1.0093 (1.0109)	Loss_mask 0.0007 (0.0004)	Loss_max 0.0007 (0.0004)	Lr 0.000003	eta 1:38:41
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0210 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 49.0%
+CMC curve
+Rank-1  : 59.3%
+Rank-3  : 70.5%
+Rank-5  : 74.5%
+Rank-10 : 79.7%
+Checkpoint saved to "log/bs48/model.pth.tar-72"
+Epoch: [73/120][100/244]	Loss 1.0586 (1.0294)	Loss_x1 1.0250 (1.0205)	Loss_x2 1.1176 (1.0539)	Loss_x3 1.0254 (1.0112)	Loss_mask 0.0007 (0.0004)	Loss_max 0.0007 (0.0004)	Lr 0.000003	eta 1:37:58
+Epoch: [73/120][200/244]	Loss 1.0304 (1.0294)	Loss_x1 1.0207 (1.0202)	Loss_x2 1.0558 (1.0541)	Loss_x3 1.0129 (1.0113)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:36:16
+Epoch: [74/120][100/244]	Loss 1.0152 (1.0277)	Loss_x1 1.0158 (1.0203)	Loss_x2 1.0247 (1.0501)	Loss_x3 1.0043 (1.0106)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:36:21
+Epoch: [74/120][200/244]	Loss 1.0493 (1.0290)	Loss_x1 1.0267 (1.0207)	Loss_x2 1.0945 (1.0529)	Loss_x3 1.0213 (1.0112)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000003	eta 1:34:31
+Epoch: [75/120][100/244]	Loss 1.0184 (1.0276)	Loss_x1 1.0204 (1.0203)	Loss_x2 1.0281 (1.0499)	Loss_x3 1.0058 (1.0104)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 1:34:29
+Epoch: [75/120][200/244]	Loss 1.0176 (1.0279)	Loss_x1 1.0229 (1.0203)	Loss_x2 1.0237 (1.0505)	Loss_x3 1.0055 (1.0106)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:32:24
+Epoch: [76/120][100/244]	Loss 1.0338 (1.0273)	Loss_x1 1.0206 (1.0206)	Loss_x2 1.0658 (1.0490)	Loss_x3 1.0119 (1.0102)	Loss_mask 0.0004 (0.0003)	Loss_max 0.0004 (0.0003)	Lr 0.000003	eta 1:32:05
+Epoch: [76/120][200/244]	Loss 1.0389 (1.0283)	Loss_x1 1.0197 (1.0204)	Loss_x2 1.0765 (1.0514)	Loss_x3 1.0163 (1.0108)	Loss_mask 0.0006 (0.0003)	Loss_max 0.0006 (0.0003)	Lr 0.000003	eta 1:30:17
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0203 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.9%
+CMC curve
+Rank-1  : 59.4%
+Rank-3  : 70.3%
+Rank-5  : 74.3%
+Rank-10 : 79.6%
+Checkpoint saved to "log/bs48/model.pth.tar-76"
+Epoch: [77/120][100/244]	Loss 1.0212 (1.0257)	Loss_x1 1.0146 (1.0199)	Loss_x2 1.0400 (1.0457)	Loss_x3 1.0077 (1.0096)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 1:30:28
+Epoch: [77/120][200/244]	Loss 1.0226 (1.0269)	Loss_x1 1.0269 (1.0202)	Loss_x2 1.0320 (1.0482)	Loss_x3 1.0080 (1.0101)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 1:28:20
+Epoch: [78/120][100/244]	Loss 1.0197 (1.0268)	Loss_x1 1.0183 (1.0197)	Loss_x2 1.0327 (1.0483)	Loss_x3 1.0071 (1.0102)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 1:28:16
+Epoch: [78/120][200/244]	Loss 1.0202 (1.0284)	Loss_x1 1.0070 (1.0205)	Loss_x2 1.0467 (1.0515)	Loss_x3 1.0038 (1.0108)	Loss_mask 0.0007 (0.0004)	Loss_max 0.0007 (0.0004)	Lr 0.000003	eta 1:26:19
+Epoch: [79/120][100/244]	Loss 1.0277 (1.0283)	Loss_x1 1.0109 (1.0193)	Loss_x2 1.0611 (1.0526)	Loss_x3 1.0072 (1.0104)	Loss_mask 0.0007 (0.0004)	Loss_max 0.0007 (0.0004)	Lr 0.000003	eta 1:26:42
+Epoch: [79/120][200/244]	Loss 1.0203 (1.0283)	Loss_x1 1.0248 (1.0198)	Loss_x2 1.0281 (1.0522)	Loss_x3 1.0071 (1.0106)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:24:28
+Epoch: [80/120][100/244]	Loss 1.0338 (1.0267)	Loss_x1 1.0242 (1.0198)	Loss_x2 1.0604 (1.0484)	Loss_x3 1.0141 (1.0099)	Loss_mask 0.0005 (0.0003)	Loss_max 0.0005 (0.0003)	Lr 0.000003	eta 1:23:44
+Epoch: [80/120][200/244]	Loss 1.0157 (1.0274)	Loss_x1 1.0173 (1.0199)	Loss_x2 1.0241 (1.0499)	Loss_x3 1.0048 (1.0101)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 1:22:04
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0206 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.7%
+CMC curve
+Rank-1  : 59.6%
+Rank-3  : 70.5%
+Rank-5  : 73.7%
+Rank-10 : 79.0%
+Checkpoint saved to "log/bs48/model.pth.tar-80"
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0212 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.7%
+CMC curve
+Rank-1  : 59.6%
+Rank-3  : 70.5%
+Rank-5  : 73.7%
+Rank-10 : 79.0%
+Checkpoint saved to "log/bs48/model.pth.tar-80"
+Epoch: [81/120][100/244]	Loss 1.0437 (1.0272)	Loss_x1 1.0195 (1.0200)	Loss_x2 1.0900 (1.0495)	Loss_x3 1.0162 (1.0099)	Loss_mask 0.0007 (0.0004)	Loss_max 0.0007 (0.0004)	Lr 0.000003	eta 1:21:41
+Epoch: [81/120][200/244]	Loss 1.0359 (1.0271)	Loss_x1 1.0224 (1.0198)	Loss_x2 1.0673 (1.0492)	Loss_x3 1.0150 (1.0099)	Loss_mask 0.0004 (0.0004)	Loss_max 0.0004 (0.0004)	Lr 0.000003	eta 1:20:04
+Epoch: [82/120][100/244]	Loss 1.0561 (1.0280)	Loss_x1 1.0306 (1.0208)	Loss_x2 1.1049 (1.0502)	Loss_x3 1.0273 (1.0106)	Loss_mask 0.0005 (0.0004)	Loss_max 0.0005 (0.0004)	Lr 0.000003	eta 1:20:23
+Epoch: [82/120][200/244]	Loss 1.0234 (1.0274)	Loss_x1 1.0284 (1.0201)	Loss_x2 1.0325 (1.0495)	Loss_x3 1.0087 (1.0103)	Loss_mask 0.0001 (0.0004)	Loss_max 0.0001 (0.0004)	Lr 0.000003	eta 1:18:24
+Epoch: [83/120][100/244]	Loss 1.0530 (1.0262)	Loss_x1 1.0360 (1.0204)	Loss_x2 1.0903 (1.0464)	Loss_x3 1.0297 (1.0098)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 1:18:37
+Epoch: [83/120][200/244]	Loss 1.0132 (1.0272)	Loss_x1 1.0118 (1.0201)	Loss_x2 1.0239 (1.0490)	Loss_x3 1.0032 (1.0102)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:16:33
+Epoch: [84/120][100/244]	Loss 1.0331 (1.0271)	Loss_x1 1.0200 (1.0192)	Loss_x2 1.0640 (1.0499)	Loss_x3 1.0119 (1.0098)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000003	eta 1:15:58
+Epoch: [84/120][200/244]	Loss 1.0460 (1.0264)	Loss_x1 1.0377 (1.0195)	Loss_x2 1.0744 (1.0480)	Loss_x3 1.0225 (1.0096)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000003	eta 1:14:02
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0217 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.9%
+CMC curve
+Rank-1  : 60.0%
+Rank-3  : 70.5%
+Rank-5  : 74.1%
+Rank-10 : 79.3%
+Checkpoint saved to "log/bs48/model.pth.tar-84"
+Epoch: [85/120][100/244]	Loss 1.0363 (1.0264)	Loss_x1 1.0209 (1.0187)	Loss_x2 1.0701 (1.0488)	Loss_x3 1.0142 (1.0093)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000003	eta 1:13:48
+Epoch: [85/120][200/244]	Loss 1.0229 (1.0275)	Loss_x1 1.0289 (1.0194)	Loss_x2 1.0295 (1.0507)	Loss_x3 1.0093 (1.0101)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:11:56
+Epoch: [86/120][100/244]	Loss 1.0245 (1.0252)	Loss_x1 1.0248 (1.0190)	Loss_x2 1.0384 (1.0457)	Loss_x3 1.0095 (1.0090)	Loss_mask 0.0001 (0.0003)	Loss_max 0.0001 (0.0003)	Lr 0.000003	eta 1:11:32
+Epoch: [86/120][200/244]	Loss 1.0146 (1.0256)	Loss_x1 1.0164 (1.0190)	Loss_x2 1.0223 (1.0466)	Loss_x3 1.0044 (1.0092)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:09:52
+Epoch: [87/120][100/244]	Loss 1.0217 (1.0263)	Loss_x1 1.0241 (1.0191)	Loss_x2 1.0323 (1.0483)	Loss_x3 1.0079 (1.0095)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:09:58
+Epoch: [87/120][200/244]	Loss 1.0257 (1.0257)	Loss_x1 1.0256 (1.0189)	Loss_x2 1.0402 (1.0469)	Loss_x3 1.0102 (1.0092)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:08:02
+Epoch: [88/120][100/244]	Loss 1.0221 (1.0254)	Loss_x1 1.0191 (1.0187)	Loss_x2 1.0384 (1.0463)	Loss_x3 1.0077 (1.0091)	Loss_mask 0.0001 (0.0004)	Loss_max 0.0001 (0.0004)	Lr 0.000003	eta 1:08:03
+Epoch: [88/120][200/244]	Loss 1.0118 (1.0258)	Loss_x1 1.0111 (1.0190)	Loss_x2 1.0215 (1.0471)	Loss_x3 1.0023 (1.0092)	Loss_mask 0.0001 (0.0004)	Loss_max 0.0001 (0.0004)	Lr 0.000003	eta 1:06:05
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0213 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.4%
+CMC curve
+Rank-1  : 59.3%
+Rank-3  : 70.0%
+Rank-5  : 73.7%
+Rank-10 : 78.9%
+Checkpoint saved to "log/bs48/model.pth.tar-88"
+Epoch: [89/120][100/244]	Loss 1.0203 (1.0245)	Loss_x1 1.0252 (1.0186)	Loss_x2 1.0277 (1.0443)	Loss_x3 1.0073 (1.0087)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 1:05:33
+Epoch: [89/120][200/244]	Loss 1.0286 (1.0252)	Loss_x1 1.0330 (1.0186)	Loss_x2 1.0393 (1.0460)	Loss_x3 1.0127 (1.0089)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:03:47
+Epoch: [90/120][100/244]	Loss 1.0322 (1.0237)	Loss_x1 1.0227 (1.0179)	Loss_x2 1.0577 (1.0433)	Loss_x3 1.0146 (1.0079)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000003	eta 1:03:22
+Epoch: [90/120][200/244]	Loss 1.0173 (1.0257)	Loss_x1 1.0234 (1.0190)	Loss_x2 1.0230 (1.0469)	Loss_x3 1.0047 (1.0092)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000003	eta 1:01:44
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0206 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.7%
+CMC curve
+Rank-1  : 60.2%
+Rank-3  : 70.1%
+Rank-5  : 73.7%
+Rank-10 : 79.3%
+Checkpoint saved to "log/bs48/model.pth.tar-90"
+Epoch: [91/120][100/244]	Loss 1.0561 (1.0260)	Loss_x1 1.0351 (1.0179)	Loss_x2 1.1011 (1.0486)	Loss_x3 1.0270 (1.0093)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000000	eta 1:01:30
+Epoch: [91/120][200/244]	Loss 1.0215 (1.0251)	Loss_x1 1.0293 (1.0184)	Loss_x2 1.0269 (1.0460)	Loss_x3 1.0075 (1.0089)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000000	eta 0:59:43
+Epoch: [92/120][100/244]	Loss 1.0185 (1.0244)	Loss_x1 1.0191 (1.0182)	Loss_x2 1.0301 (1.0446)	Loss_x3 1.0056 (1.0085)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000000	eta 0:59:37
+Epoch: [92/120][200/244]	Loss 1.0364 (1.0245)	Loss_x1 1.0141 (1.0179)	Loss_x2 1.0794 (1.0452)	Loss_x3 1.0110 (1.0085)	Loss_mask 0.0006 (0.0003)	Loss_max 0.0006 (0.0003)	Lr 0.000000	eta 0:57:53
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0206 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.8%
+CMC curve
+Rank-1  : 60.4%
+Rank-3  : 70.5%
+Rank-5  : 73.9%
+Rank-10 : 79.2%
+Checkpoint saved to "log/bs48/model.pth.tar-92"
+Epoch: [93/120][100/244]	Loss 1.0190 (1.0239)	Loss_x1 1.0092 (1.0175)	Loss_x2 1.0412 (1.0440)	Loss_x3 1.0037 (1.0081)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000000	eta 0:57:08
+Epoch: [93/120][200/244]	Loss 1.0182 (1.0247)	Loss_x1 1.0217 (1.0180)	Loss_x2 1.0263 (1.0455)	Loss_x3 1.0059 (1.0086)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:55:34
+Epoch: [94/120][100/244]	Loss 1.0560 (1.0257)	Loss_x1 1.0299 (1.0176)	Loss_x2 1.1055 (1.0483)	Loss_x3 1.0267 (1.0091)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000000	eta 0:54:50
+Epoch: [94/120][200/244]	Loss 1.0109 (1.0251)	Loss_x1 1.0109 (1.0175)	Loss_x2 1.0192 (1.0469)	Loss_x3 1.0020 (1.0087)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:53:23
+Epoch: [95/120][100/244]	Loss 1.0127 (1.0264)	Loss_x1 1.0125 (1.0177)	Loss_x2 1.0232 (1.0500)	Loss_x3 1.0015 (1.0092)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:53:11
+Epoch: [95/120][200/244]	Loss 1.0183 (1.0262)	Loss_x1 1.0134 (1.0181)	Loss_x2 1.0351 (1.0491)	Loss_x3 1.0047 (1.0093)	Loss_mask 0.0004 (0.0004)	Loss_max 0.0004 (0.0004)	Lr 0.000000	eta 0:51:34
+Epoch: [96/120][100/244]	Loss 1.0272 (1.0240)	Loss_x1 1.0323 (1.0174)	Loss_x2 1.0365 (1.0443)	Loss_x3 1.0119 (1.0081)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:51:12
+Epoch: [96/120][200/244]	Loss 1.0238 (1.0237)	Loss_x1 1.0288 (1.0171)	Loss_x2 1.0327 (1.0441)	Loss_x3 1.0092 (1.0078)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:49:32
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0204 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.6%
+CMC curve
+Rank-1  : 60.0%
+Rank-3  : 69.9%
+Rank-5  : 73.8%
+Rank-10 : 79.1%
+Checkpoint saved to "log/bs48/model.pth.tar-96"
+Epoch: [97/120][100/244]	Loss 1.0247 (1.0243)	Loss_x1 1.0125 (1.0162)	Loss_x2 1.0521 (1.0465)	Loss_x3 1.0065 (1.0079)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000000	eta 0:48:51
+Epoch: [97/120][200/244]	Loss 1.0229 (1.0252)	Loss_x1 1.0313 (1.0176)	Loss_x2 1.0281 (1.0472)	Loss_x3 1.0084 (1.0087)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:47:22
+Epoch: [98/120][100/244]	Loss 1.0363 (1.0226)	Loss_x1 1.0286 (1.0179)	Loss_x2 1.0606 (1.0406)	Loss_x3 1.0182 (1.0075)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000000	eta 0:46:38
+Epoch: [98/120][200/244]	Loss 1.0276 (1.0235)	Loss_x1 1.0219 (1.0176)	Loss_x2 1.0482 (1.0431)	Loss_x3 1.0115 (1.0079)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000000	eta 0:45:15
+Epoch: [99/120][100/244]	Loss 1.0244 (1.0258)	Loss_x1 1.0107 (1.0188)	Loss_x2 1.0536 (1.0473)	Loss_x3 1.0064 (1.0090)	Loss_mask 0.0004 (0.0004)	Loss_max 0.0004 (0.0004)	Lr 0.000000	eta 0:44:42
+Epoch: [99/120][200/244]	Loss 1.0405 (1.0243)	Loss_x1 1.0172 (1.0179)	Loss_x2 1.0837 (1.0447)	Loss_x3 1.0169 (1.0083)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:43:18
+Epoch: [100/120][100/244]	Loss 1.0109 (1.0244)	Loss_x1 1.0082 (1.0170)	Loss_x2 1.0211 (1.0458)	Loss_x3 1.0029 (1.0082)	Loss_mask 0.0001 (0.0004)	Loss_max 0.0001 (0.0004)	Lr 0.000000	eta 0:42:50
+Epoch: [100/120][200/244]	Loss 1.0233 (1.0243)	Loss_x1 1.0227 (1.0175)	Loss_x2 1.0363 (1.0451)	Loss_x3 1.0099 (1.0081)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:41:22
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0206 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.7%
+CMC curve
+Rank-1  : 60.4%
+Rank-3  : 70.3%
+Rank-5  : 73.9%
+Rank-10 : 79.2%
+Checkpoint saved to "log/bs48/model.pth.tar-100"
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0199 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.7%
+CMC curve
+Rank-1  : 60.4%
+Rank-3  : 70.3%
+Rank-5  : 73.9%
+Rank-10 : 79.2%
+Checkpoint saved to "log/bs48/model.pth.tar-100"
+Epoch: [101/120][100/244]	Loss 1.0259 (1.0245)	Loss_x1 1.0112 (1.0179)	Loss_x2 1.0566 (1.0453)	Loss_x3 1.0071 (1.0081)	Loss_mask 0.0005 (0.0004)	Loss_max 0.0005 (0.0004)	Lr 0.000000	eta 0:40:36
+Epoch: [101/120][200/244]	Loss 1.0178 (1.0243)	Loss_x1 1.0099 (1.0174)	Loss_x2 1.0373 (1.0454)	Loss_x3 1.0044 (1.0081)	Loss_mask 0.0004 (0.0004)	Loss_max 0.0004 (0.0004)	Lr 0.000000	eta 0:39:17
+Epoch: [102/120][100/244]	Loss 1.0172 (1.0263)	Loss_x1 1.0188 (1.0179)	Loss_x2 1.0272 (1.0494)	Loss_x3 1.0045 (1.0092)	Loss_mask 0.0003 (0.0004)	Loss_max 0.0003 (0.0004)	Lr 0.000000	eta 0:38:48
+Epoch: [102/120][200/244]	Loss 1.0278 (1.0257)	Loss_x1 1.0233 (1.0176)	Loss_x2 1.0470 (1.0483)	Loss_x3 1.0111 (1.0088)	Loss_mask 0.0004 (0.0004)	Loss_max 0.0004 (0.0004)	Lr 0.000000	eta 0:37:26
+Epoch: [103/120][100/244]	Loss 1.0162 (1.0235)	Loss_x1 1.0088 (1.0179)	Loss_x2 1.0349 (1.0431)	Loss_x3 1.0023 (1.0078)	Loss_mask 0.0007 (0.0003)	Loss_max 0.0007 (0.0003)	Lr 0.000000	eta 0:36:19
+Epoch: [103/120][200/244]	Loss 1.0351 (1.0234)	Loss_x1 1.0114 (1.0175)	Loss_x2 1.0786 (1.0431)	Loss_x3 1.0102 (1.0077)	Loss_mask 0.0006 (0.0003)	Loss_max 0.0006 (0.0003)	Lr 0.000000	eta 0:35:06
+Epoch: [104/120][100/244]	Loss 1.0202 (1.0232)	Loss_x1 1.0222 (1.0170)	Loss_x2 1.0313 (1.0428)	Loss_x3 1.0058 (1.0077)	Loss_mask 0.0003 (0.0003)	Loss_max 0.0003 (0.0003)	Lr 0.000000	eta 0:34:14
+Epoch: [104/120][200/244]	Loss 1.0461 (1.0235)	Loss_x1 1.0225 (1.0171)	Loss_x2 1.0917 (1.0435)	Loss_x3 1.0190 (1.0078)	Loss_mask 0.0006 (0.0003)	Loss_max 0.0006 (0.0003)	Lr 0.000000	eta 0:33:02
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0203 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.7%
+CMC curve
+Rank-1  : 60.5%
+Rank-3  : 70.1%
+Rank-5  : 73.9%
+Rank-10 : 79.5%
+Checkpoint saved to "log/bs48/model.pth.tar-104"
+Epoch: [105/120][100/244]	Loss 1.0204 (1.0247)	Loss_x1 1.0236 (1.0170)	Loss_x2 1.0299 (1.0466)	Loss_x3 1.0068 (1.0084)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:32:02
+Epoch: [105/120][200/244]	Loss 1.0333 (1.0244)	Loss_x1 1.0150 (1.0172)	Loss_x2 1.0697 (1.0456)	Loss_x3 1.0113 (1.0082)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000000	eta 0:30:55
+Epoch: [106/120][100/244]	Loss 1.0282 (1.0239)	Loss_x1 1.0195 (1.0170)	Loss_x2 1.0525 (1.0447)	Loss_x3 1.0097 (1.0079)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000000	eta 0:30:13
+Epoch: [106/120][200/244]	Loss 1.0372 (1.0241)	Loss_x1 1.0213 (1.0171)	Loss_x2 1.0714 (1.0450)	Loss_x3 1.0150 (1.0079)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000000	eta 0:29:00
+Epoch: [107/120][100/244]	Loss 1.0217 (1.0240)	Loss_x1 1.0118 (1.0170)	Loss_x2 1.0454 (1.0450)	Loss_x3 1.0052 (1.0081)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000000	eta 0:28:26
+Epoch: [107/120][200/244]	Loss 1.0109 (1.0232)	Loss_x1 1.0097 (1.0168)	Loss_x2 1.0205 (1.0434)	Loss_x3 1.0015 (1.0076)	Loss_mask 0.0003 (0.0004)	Loss_max 0.0003 (0.0004)	Lr 0.000000	eta 0:27:09
+Epoch: [108/120][100/244]	Loss 1.0134 (1.0241)	Loss_x1 1.0127 (1.0172)	Loss_x2 1.0241 (1.0450)	Loss_x3 1.0027 (1.0079)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:25:58
+Epoch: [108/120][200/244]	Loss 1.0371 (1.0248)	Loss_x1 1.0178 (1.0174)	Loss_x2 1.0761 (1.0464)	Loss_x3 1.0130 (1.0084)	Loss_mask 0.0007 (0.0004)	Loss_max 0.0007 (0.0004)	Lr 0.000000	eta 0:24:51
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0201 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.6%
+CMC curve
+Rank-1  : 59.8%
+Rank-3  : 70.0%
+Rank-5  : 74.0%
+Rank-10 : 78.8%
+Checkpoint saved to "log/bs48/model.pth.tar-108"
+Epoch: [109/120][100/244]	Loss 1.0169 (1.0238)	Loss_x1 1.0141 (1.0182)	Loss_x2 1.0310 (1.0433)	Loss_x3 1.0048 (1.0081)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000000	eta 0:23:57
+Epoch: [109/120][200/244]	Loss 1.0437 (1.0240)	Loss_x1 1.0191 (1.0175)	Loss_x2 1.0893 (1.0445)	Loss_x3 1.0176 (1.0082)	Loss_mask 0.0006 (0.0003)	Loss_max 0.0006 (0.0003)	Lr 0.000000	eta 0:22:54
+Epoch: [110/120][100/244]	Loss 1.0204 (1.0244)	Loss_x1 1.0253 (1.0170)	Loss_x2 1.0279 (1.0459)	Loss_x3 1.0071 (1.0084)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000000	eta 0:22:02
+Epoch: [110/120][200/244]	Loss 1.0353 (1.0250)	Loss_x1 1.0168 (1.0173)	Loss_x2 1.0715 (1.0469)	Loss_x3 1.0149 (1.0086)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000000	eta 0:20:53
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0209 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.6%
+CMC curve
+Rank-1  : 59.7%
+Rank-3  : 70.2%
+Rank-5  : 73.7%
+Rank-10 : 79.3%
+Checkpoint saved to "log/bs48/model.pth.tar-110"
+Epoch: [111/120][100/244]	Loss 1.0190 (1.0248)	Loss_x1 1.0199 (1.0169)	Loss_x2 1.0304 (1.0470)	Loss_x3 1.0057 (1.0084)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:19:58
+Epoch: [111/120][200/244]	Loss 1.0139 (1.0237)	Loss_x1 1.0178 (1.0170)	Loss_x2 1.0203 (1.0444)	Loss_x3 1.0027 (1.0078)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:18:51
+Epoch: [112/120][100/244]	Loss 1.0248 (1.0240)	Loss_x1 1.0263 (1.0175)	Loss_x2 1.0370 (1.0444)	Loss_x3 1.0103 (1.0080)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:17:44
+Epoch: [112/120][200/244]	Loss 1.0410 (1.0242)	Loss_x1 1.0205 (1.0178)	Loss_x2 1.0788 (1.0445)	Loss_x3 1.0207 (1.0082)	Loss_mask 0.0003 (0.0004)	Loss_max 0.0003 (0.0004)	Lr 0.000000	eta 0:16:43
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0210 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.5%
+CMC curve
+Rank-1  : 59.7%
+Rank-3  : 70.0%
+Rank-5  : 73.8%
+Rank-10 : 79.0%
+Checkpoint saved to "log/bs48/model.pth.tar-112"
+Epoch: [113/120][100/244]	Loss 1.0363 (1.0254)	Loss_x1 1.0255 (1.0174)	Loss_x2 1.0638 (1.0479)	Loss_x3 1.0177 (1.0085)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:15:41
+Epoch: [113/120][200/244]	Loss 1.0149 (1.0241)	Loss_x1 1.0158 (1.0174)	Loss_x2 1.0248 (1.0449)	Loss_x3 1.0035 (1.0080)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:14:40
+Epoch: [114/120][100/244]	Loss 1.0355 (1.0232)	Loss_x1 1.0162 (1.0168)	Loss_x2 1.0735 (1.0434)	Loss_x3 1.0124 (1.0076)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000000	eta 0:13:42
+Epoch: [114/120][200/244]	Loss 1.0148 (1.0236)	Loss_x1 1.0130 (1.0174)	Loss_x2 1.0273 (1.0437)	Loss_x3 1.0033 (1.0078)	Loss_mask 0.0001 (0.0004)	Loss_max 0.0001 (0.0004)	Lr 0.000000	eta 0:12:40
+Epoch: [115/120][100/244]	Loss 1.0241 (1.0253)	Loss_x1 1.0251 (1.0175)	Loss_x2 1.0366 (1.0475)	Loss_x3 1.0097 (1.0087)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:11:36
+Epoch: [115/120][200/244]	Loss 1.0281 (1.0248)	Loss_x1 1.0172 (1.0173)	Loss_x2 1.0548 (1.0465)	Loss_x3 1.0102 (1.0083)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:10:37
+Epoch: [116/120][100/244]	Loss 1.0170 (1.0247)	Loss_x1 1.0184 (1.0173)	Loss_x2 1.0276 (1.0462)	Loss_x3 1.0044 (1.0085)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:09:28
+Epoch: [116/120][200/244]	Loss 1.0145 (1.0242)	Loss_x1 1.0174 (1.0172)	Loss_x2 1.0222 (1.0452)	Loss_x3 1.0030 (1.0082)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000000	eta 0:08:32
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0216 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.5%
+CMC curve
+Rank-1  : 59.8%
+Rank-3  : 69.9%
+Rank-5  : 73.8%
+Rank-10 : 79.2%
+Checkpoint saved to "log/bs48/model.pth.tar-116"
+Epoch: [117/120][100/244]	Loss 1.0186 (1.0232)	Loss_x1 1.0179 (1.0177)	Loss_x2 1.0322 (1.0423)	Loss_x3 1.0049 (1.0077)	Loss_mask 0.0002 (0.0003)	Loss_max 0.0002 (0.0003)	Lr 0.000000	eta 0:07:25
+Epoch: [117/120][200/244]	Loss 1.0334 (1.0236)	Loss_x1 1.0180 (1.0175)	Loss_x2 1.0678 (1.0435)	Loss_x3 1.0108 (1.0078)	Loss_mask 0.0006 (0.0003)	Loss_max 0.0006 (0.0003)	Lr 0.000000	eta 0:06:29
+Epoch: [118/120][100/244]	Loss 1.0146 (1.0252)	Loss_x1 1.0169 (1.0177)	Loss_x2 1.0230 (1.0472)	Loss_x3 1.0032 (1.0087)	Loss_mask 0.0001 (0.0004)	Loss_max 0.0001 (0.0004)	Lr 0.000000	eta 0:05:21
+Epoch: [118/120][200/244]	Loss 1.0160 (1.0248)	Loss_x1 1.0115 (1.0175)	Loss_x2 1.0321 (1.0462)	Loss_x3 1.0034 (1.0084)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:04:27
+Epoch: [119/120][100/244]	Loss 1.0251 (1.0241)	Loss_x1 1.0108 (1.0169)	Loss_x2 1.0549 (1.0451)	Loss_x3 1.0065 (1.0082)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000000	eta 0:03:19
+Epoch: [119/120][200/244]	Loss 1.0115 (1.0239)	Loss_x1 1.0118 (1.0173)	Loss_x2 1.0207 (1.0444)	Loss_x3 1.0014 (1.0081)	Loss_mask 0.0002 (0.0004)	Loss_max 0.0002 (0.0004)	Lr 0.000000	eta 0:02:25
+Epoch: [120/120][100/244]	Loss 1.0231 (1.0258)	Loss_x1 1.0123 (1.0180)	Loss_x2 1.0481 (1.0481)	Loss_x3 1.0061 (1.0090)	Loss_mask 0.0006 (0.0004)	Loss_max 0.0006 (0.0004)	Lr 0.000000	eta 0:01:12
+Epoch: [120/120][200/244]	Loss 1.0217 (1.0246)	Loss_x1 1.0238 (1.0176)	Loss_x2 1.0329 (1.0456)	Loss_x3 1.0073 (1.0084)	Loss_mask 0.0003 (0.0004)	Loss_max 0.0003 (0.0004)	Lr 0.000000	eta 0:00:22
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0203 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.6%
+CMC curve
+Rank-1  : 60.1%
+Rank-3  : 70.2%
+Rank-5  : 74.0%
+Rank-10 : 79.4%
+Checkpoint saved to "log/bs48/model.pth.tar-120"
+=> Final test
+##### Evaluating occludedduke (source) #####
+Extracting features from query set ...
+Done, obtained 2210-by-1024 matrix
+Extracting features from gallery set ...
+Done, obtained 17661-by-1024 matrix
+Speed: 0.0199 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 48.6%
+CMC curve
+Rank-1  : 60.1%
+Rank-3  : 70.2%
+Rank-5  : 74.0%
+Rank-10 : 79.4%
+Checkpoint saved to "log/bs48/model.pth.tar-120"
+Elapsed 4:31:58
