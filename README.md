@@ -6,6 +6,31 @@ This is the pytorch implementation of the [paper](https://ieeexplore.ieee.org/ab
 
 **Fig 1**.IGOAS framework
 
+# Installation
+
+Make sure `conda <https://www.anaconda.com/distribution/>`_ is installed.
+
+
+.. code-block:: bash
+
+    # cd to your preferred directory and clone this repo
+    git clone https://github.com/Vill-Lab/IGOAS.git
+    
+    # create environment
+    conda create --name torchreid python=3.7
+    conda activate torchreid
+    
+    # install dependencies
+    # make sure `which python` and `which pip` point to the correct path
+    pip install -r requirements.txt
+    
+    # install torch and torchvision (select the proper cuda version to suit your machine)
+    conda install pytorch torchvision cudatoolkit=9.0 -c pytorch
+    
+    # install torchreid (don't need to re-build it if you modify the source code)
+    python setup.py develop
+
+
 ## Reference
 This code is based on [torchreid](https://github.com/KaiyangZhou/deep-person-reid).
 
