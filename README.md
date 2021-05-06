@@ -28,6 +28,13 @@ Make sure [conda](https://www.anaconda.com/distribution/) is installed.
     python setup.py develop
 
 
+# Train
+To train IGOAS on Occluded-Duke, do
+
+     python scirpt/main.py --config-file configs/bfe.yaml
+
+
+
 ## Citation 
 If you find IGOAS useful in your research, please consider citing.
 
