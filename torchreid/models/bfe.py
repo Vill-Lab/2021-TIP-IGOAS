@@ -262,7 +262,7 @@ class RandomDrop(nn.Module):
                         img[i, :, x1:x1 + h, y1:y1 + w] = 0
                         break
         mask = img.new_ones(img.shape)
-        return img, mask
+        return img, mask 
 
 
 class BatchDrop(nn.Module):
