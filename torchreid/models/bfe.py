@@ -698,10 +698,8 @@ class ResNet(nn.Module):
             v2 = self.global_maxpool(f2)
             v2 = v2.view(v2.size(0), -1)
             v2_1 = self.reduction2(v2)
-
-            # v3_1 = torch.cat([w1*v1_1, w2*v2_1], 1)
-            # v3_1 = torch.add(v1_1, v2_1)
-            v3_1 = v1_1 * v2_1
+            
+            v3_1 = torch.add(v1_1, v2_1)
 
             y1 = self.classifier1(v1_1)
             y2 = self.classifier2(v2_1)
@@ -732,19 +730,10 @@ class ResNet(nn.Module):
             v2 = v2.view(v2.size(0), -1)
             v2_1 = self.reduction2(v2)
 
-            # Adaptive Attention Branch
-            # w1 = self.regressor(v2_1)
-            # w2 = self.prob(w1)
-            # w2 = w2.view(-1, 1)
-            # v3_1 = torch.cat(((1 - w2) * v1_1, (1 + w2) * v2_1), dim=1)
-            # return F.normalize(v3_1, p=2, dim=1)
-
             v1_1 = F.normalize(v1_1, p=2, dim=1)
             v2_1 = F.normalize(v2_1, p=2, dim=1)
 
-            # v3_1 = torch.cat([w1*v1_1, w2*v2_1], 1)
-            # v3_1 = torch.add(v1_1, v2_1)
-            v3_1 = v1_1 * v2_1
+            v3_1 = torch.add(v1_1, v2_1)
             return v3_1
 
 
