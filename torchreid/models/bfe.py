@@ -699,11 +699,11 @@ class ResNet(nn.Module):
             v2 = v2.view(v2.size(0), -1)
             v2_1 = self.reduction2(v2)
             
-            v3_1 = torch.add(v1_1, v2_1)
+            v3_1 = torch.cat([v1_1, v2_1], 1)
 
             y1 = self.classifier1(v1_1)
             y2 = self.classifier2(v2_1)
-            y3 = self.classifier4(v3_1)
+            y3 = self.classifier3(v3_1)
 
             if self.loss == 'softmax':
                 return y1, y2, y3, pred_f1, ture_f1, pred_f2, ture_f2
@@ -733,8 +733,7 @@ class ResNet(nn.Module):
             v1_1 = F.normalize(v1_1, p=2, dim=1)
             v2_1 = F.normalize(v2_1, p=2, dim=1)
 
-            v3_1 = torch.add(v1_1, v2_1)
-            return v3_1
+            return torch.cat([v1_1, v2_1], 1)
 
 
 # ResNet
