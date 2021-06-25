@@ -121,6 +121,7 @@ class ImageSoftmaxEngine(Engine):
             loss_w = F.softmax(loss_x, dim=-1)
             loss = torch.sum(loss_w * loss_x) + w_mask*loss_mask + w_max*loss_max
             # loss = (loss_x1 + loss_x2 + loss_x3)/3 + w_mask*loss_mask + w_max*loss_max
+
             loss.backward()
             self.optimizer.step()
 
