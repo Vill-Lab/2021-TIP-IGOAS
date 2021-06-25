@@ -6,14 +6,18 @@ model:
 
 data:
   type: 'image'
-  sources: ['occludedreid']   
-  targets: ['occludedreid']   
+  # sources: ['market1501']
+  # targets: ['partialreid']
+  sources: ['occludedduke']   #occludedduke
+  targets: ['occludedduke']   #pdukereid DUKEMTMC-REID  dukemtmcreid
   height: 384
   width: 128
   combineall: False
-  transforms: ['random_flip'] 
-  save_dir: 'log/bre'
+  transforms: ['random_flip'] # 'color_jitter' ## train on Market1501 test on O/P datasets
+  save_dir: 'log/partialE'
   workers: 16
+#  norm_mean: [0.4300, 0.4236, 0.4393]  # mean and std of occludedduke
+#  norm_std: [0.1954, 0.1987, 0.1863]
 
 sampler:
   train_sampler: 'RandomSampler'
@@ -35,16 +39,16 @@ train:
   lr_scheduler: 'multi_step'
   # lr_scheduler: 'warmup'
   stepsize: [20,40]
-  print_freq: 200  
+  print_freq: 200  #20
 
 test:
-  batch_size: 128 
+  batch_size: 128 # 100
   dist_metric: 'euclidean'
   normalize_feature: False
   evaluate: False
-  eval_freq: 4 
+  eval_freq: 4 # -1
   rerank: False
   start_eval: 0
   visactmap: False
-  visrank: False    
+  visrank: False       # True
   visrank_topk: 10
