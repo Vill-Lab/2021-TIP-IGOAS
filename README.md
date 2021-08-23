@@ -52,7 +52,7 @@ If you find IGOAS useful in your research, please consider citing.
 @article{tip21,
    author = {Zhao, Cairong and Lv, Xinbi and Dou, Shuguang and Zhang, Shanshan and Wu, Jun and Wang, Liang},
    title = {Incremental Generative Occlusion Adversarial Suppression Network for Person ReID},
-   journal = {IEEE transactions on image processing : a publication of the IEEE Signal Processing Society},
+   journal = {IEEE Transactions on Image Processing},
    volume = {30},
    pages = {4212-4224},
    DOI = {10.1109/tip.2021.3070182},
