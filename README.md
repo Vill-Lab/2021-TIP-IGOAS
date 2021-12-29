@@ -42,7 +42,7 @@ To train IGOAS on Occluded-Duke, do
 | PGFA | 51.4 | 37.3 |
 | HONet| 55.1 | 43.8 |
 | MHSA | 59.7 | 44.8 |
-|IGOAS | *60.1* | *49.4* |
+|IGOAS | **60.1** | **49.4** |
 
 
 
