@@ -12,6 +12,7 @@ Make sure [conda](https://www.anaconda.com/distribution/) is installed.
 
     # cd to your preferred directory and clone this repo
     git clone https://github.com/Vill-Lab/IGOAS.git
+    cd IGOAS
     
     # create environment
     conda create --name torchreid python=3.7
@@ -41,7 +42,7 @@ To train IGOAS on Occluded-Duke, do
 | PGFA | 51.4 | 37.3 |
 | HONet| 55.1 | 43.8 |
 | MHSA | 59.7 | 44.8 |
-|IGOAS | 60.1 | 49.4 |
+|IGOAS | *60.1* | *49.4* |
 
 
 
@@ -49,7 +50,7 @@ To train IGOAS on Occluded-Duke, do
 If you find IGOAS useful in your research, please consider citing.
 
 ```
-@article{tip21,
+@article{tip21igoas,
    author = {Zhao, Cairong and Lv, Xinbi and Dou, Shuguang and Zhang, Shanshan and Wu, Jun and Wang, Liang},
    title = {Incremental Generative Occlusion Adversarial Suppression Network for Person ReID},
    journal = {IEEE Transactions on Image Processing},
